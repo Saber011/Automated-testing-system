@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.article</OriginalElement>
+  <nodes>
+    <node x="833.5192307692307" y="276.0">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test_task</node>
+    <node x="606.8076923076923" y="0.0">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.category</node>
+    <node x="0.0" y="138.0">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.role</node>
+    <node x="645.5192307692307" y="320.5">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.ref_test_category</node>
+    <node x="461.5192307692307" y="287.0">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test_result</node>
+    <node x="169.5" y="309.0">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.user_authorization_provider</node>
+    <node x="228.5" y="127.0">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.user</node>
+    <node x="379.6730769230769" y="138.5">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.ref_article_category</node>
+    <node x="35.5" y="320.5">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.user_roles</node>
+    <node x="884.5192307692307" y="138.0">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test_type</node>
+    <node x="588.1175213675214" y="130.33333333333331">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test</node>
+    <node x="365.6730769230769" y="0.0">35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.article</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test_result" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.user">
+      <point x="-41.0" y="-71.5" />
+      <point x="502.5192307692307" y="256.0" />
+      <point x="336.83333333333337" y="256.0" />
+      <point x="43.33333333333337" y="49.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test_task" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test">
+      <point x="-40.5" y="-82.5" />
+      <point x="874.0192307692307" y="246.0" />
+      <point x="708.6730769230769" y="246.0" />
+      <point x="46.0" y="49.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.ref_test_category" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test">
+      <point x="-42.0" y="-38.0" />
+      <point x="687.5192307692307" y="256.0" />
+      <point x="662.6730769230769" y="256.0" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.category">
+      <point x="0.0" y="-49.5" />
+      <point x="662.6730769230769" y="102.0" />
+      <point x="675.8076923076923" y="102.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.user_roles" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.role">
+      <point x="-28.5" y="-38.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.ref_test_category" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.category">
+      <point x="42.0" y="-38.0" />
+      <point x="771.5192307692307" y="256.0" />
+      <point x="770.3461538461538" y="256.0" />
+      <point x="770.3461538461538" y="102.0" />
+      <point x="721.8076923076923" y="102.0" />
+      <point x="46.0" y="38.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test_task" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test_type">
+      <point x="40.5" y="-82.5" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test_result" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.test">
+      <point x="41.0" y="-71.5" />
+      <point x="584.5192307692307" y="256.0" />
+      <point x="616.6730769230769" y="256.0" />
+      <point x="-46.0" y="49.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.ref_article_category" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.article">
+      <point x="-48.0" y="-38.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.user_authorization_provider" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.user">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.ref_article_category" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.category">
+      <point x="48.0" y="-38.0" />
+      <point x="523.6730769230769" y="102.0" />
+      <point x="629.8076923076923" y="102.0" />
+      <point x="-46.0" y="38.5" />
+    </edge>
+    <edge source="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.user_roles" target="35445ab7-d463-4cdb-bdc9-882d3547a041.TABLE:testing.core.user">
+      <point x="28.5" y="-38.0" />
+      <point x="121.0" y="256.0" />
+      <point x="250.16666666666663" y="256.0" />
+      <point x="-43.33333333333337" y="49.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="513.0" y="255.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
