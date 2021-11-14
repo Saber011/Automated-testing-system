@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>Automated.Testing.System.DataAccess.Postgres</AssemblyName>
+        <RootNamespace>Automated.Testing.System.DataAccess.Postgres</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.0.78" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Options, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>..\..\..\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\5.0.0\ref\net5.0\Microsoft.Extensions.Options.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Automated.Testing.System.Core\Automated.Testing.System.Core.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.DatabaseProvider.Postgres\Automated.Testing.System.DatabaseProvider.Postgres.csproj" />
+    </ItemGroup>
+
+</Project>
