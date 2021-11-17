@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Automated.Testing.System.Core.Core;
@@ -9,13 +7,11 @@ using Automated.Testing.System.DataAccess.Postgres.Extensions;
 using Automated.Testing.System.DataAccess.Postgres.Repositories.Interfaces;
 using Automated.Testing.System.DatabaseProvider.Postgres;
 using Dapper;
-using Npgsql;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Automated.Testing.System.DataAccess.Postgres.Repositories
 {
-    /// <inheritdoc />
-    public class UserRepository: IUserRepository
+	/// <inheritdoc />
+	public class UserRepository: IUserRepository
     {
         private readonly IPostgresService _postgresService;
 
