@@ -1,0 +1,29 @@
+<div class="main-div">
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="login()">
+      <h2>Авторизация</h2>
+      <mat-error *ngIf="loginInvalid">
+        Имя пользователя и пароль не были распознаны
+      </mat-error>
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Email" formControlName="username" required>
+        <mat-error>
+          Пожалуйста, укажите действительный адрес электронной почты
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input matInput type="password" placeholder="Password" formControlName="password" required>
+        <mat-error>
+          Пожалуйста, укажите действительный пароль
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <mat-error *ngIf="errMessage">{{errMessage}}</mat-error>
+      </div>
+      <button mat-raised-button color="primary">Войти</button>
+      <a mat-raised-button color="primary" [routerLink]="'register'">Регистрация</a>
+    </form>
+  </mat-card-content>
+</mat-card>
+</div>
