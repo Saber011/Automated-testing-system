@@ -186,11 +186,11 @@ alter table core.test_task_response_option rename column test_task_response_opti
 
 alter table core.test_task rename column response_options to test_task_response_option_id;
 
-alter table core.test_task alter column test_task_response_option_id type int using test_task_response_option_id::int;
+--alter table core.test_task alter column test_task_response_option_id type int using test_task_response_option_id::int;
 
-alter table core.test_task
-	add constraint test_task_test_task_response_option_test_task_response_option_id_fk
-		foreign key (test_task_response_option_id) references core.test_task_response_option;
+-- alter table core.test_task
+-- 	add constraint test_task_test_task_response_option_test_task_response_option_id_fk
+-- 		foreign key (test_task_response_option_id) references core.test_task_response_option;
 
 create table core.test_task_answer
 (
@@ -205,27 +205,27 @@ create table core.test_task_answer
 
 alter table core.test_task rename column answers to test_task_answer_id;
 
-alter table core.test_task alter column test_task_answer_id type integer using test_task_answer_id::integer;
+--alter table core.test_task alter column test_task_answer_id type integer using test_task_answer_id::integer;
 
-alter table core.test_task alter column test_task_response_option_id type integer using test_task_response_option_id::integer;
+--alter table core.test_task alter column test_task_response_option_id type integer using test_task_response_option_id::integer;
 
-alter table core.test_task
-	add constraint test_task_test_task_answer_test_task_answer_id_fk
-		foreign key (test_task_answer_id) references core.test_task_answer;
+-- alter table core.test_task
+-- 	add constraint test_task_test_task_answer_test_task_answer_id_fk
+-- 		foreign key (test_task_answer_id) references core.test_task_answer;
 
-alter table core.test_task
-	add constraint test_task_test_task_response_option_test_task_response_option_id_fk
-		foreign key (test_task_response_option_id) references core.test_task_response_option;
+-- alter table core.test_task
+-- 	add constraint test_task_test_task_response_option_test_task_response_option_id_fk
+-- 		foreign key (test_task_response_option_id) references core.test_task_response_option;
 
 alter table core.test_result rename column correct_answers to correct_answers_id;
 
-alter table core.test_result alter column correct_answers_id type integer using correct_answers_id::integer;
+-- alter table core.test_result alter column correct_answers_id type integer using correct_answers_id::integer;
 
 alter table core.test_result drop column incorrect_answers;
 
-alter table core.test_result
-	add constraint test_result_test_task_answer_test_task_answer_id_fk
-		foreign key (correct_answers_id) references core.test_task_answer;
+-- alter table core.test_result
+-- 	add constraint test_result_test_task_answer_test_task_answer_id_fk
+-- 		foreign key (correct_answers_id) references core.test_task_answer;
 
 alter table core.test_task drop column test_task_answer_id;
 
@@ -249,7 +249,7 @@ alter table core.test_result drop column correct_answers_id;
 alter table core.test_result
 	add correct_answers_id integer;
 
-alter table core.test_result drop column incorrect_answers;
+-- alter table core.test_result drop column incorrect_answers;
 
 alter table core.test_result
 	add constraint test_result_test_task_answer_test_task_answer_id_fk
@@ -262,30 +262,26 @@ alter table core.test_result drop constraint test_result_test_task_answer_test_t
 alter table core.test_result
 	add constraint test_result_test_task_response_option_test_task_response_option_id_fk
 		foreign key (test_task_response_option) references core.test_task_response_option;
-
 create table core.dictionary
 (
-	dictionary_id serial
-		constraint dictionary_pk
-			primary key,
-	dictionary_name varchar(120) not null
+    dictionary_id   serial       not null
+        constraint dictionary_pk
+            primary key,
+    dictionary_name varchar(120) not null,
+    table_name      varchar(120) not null
 );
 
-create unique index dictionary_dictionary_name_uindex
-	on core.dictionary (dictionary_name);
-
 alter table core.dictionary
-	add table_name varchar(120) not null;
+    owner to postgres;
+
+create unique index dictionary_dictionary_name_uindex
+    on core.dictionary (dictionary_name);
+
+INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'Категории', 'category');
+INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'Роли', 'role');
+INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'Статьи', 'article');
 
 
-create sequence core.role_role_id_seq;
-
-alter table core.role alter column role_id set default nextval('core.role_role_id_seq');
-
-alter sequence core.role_role_id_seq owned by core.role.role_id;
 
 
 
-INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'category', 'category');
-INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'role', 'role');
-INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'article', 'article');
