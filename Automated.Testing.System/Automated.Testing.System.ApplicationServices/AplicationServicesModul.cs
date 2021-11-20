@@ -17,9 +17,11 @@ namespace Automated.Testing.System.ApplicationServices
                 
                 // repository
                 services.AddScoped<IUserRepository, UserRepository>();
+                services.AddScoped<IDictionaryRepository, DictionaryRepository>();
                 
                 //services
                 services.AddScoped<IUserService, UserService>();
+                services.AddScoped<IDictionaryService, DictionaryService>();
                 
             }
     }

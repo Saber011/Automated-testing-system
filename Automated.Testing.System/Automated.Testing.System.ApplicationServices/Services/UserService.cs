@@ -61,6 +61,8 @@ namespace Automated.Testing.System.ApplicationServices.Services
         /// <inheritdoc />
         public async Task<AuthenticateInfo> RefreshTokenAsync(string token, string ipAddress)
         {
+            Guard.NotNullOrWhiteSpace(token, nameof(token));
+            
             var usersId = await _userRepository.GetUseridByTokens(token);
             
             if (usersId == null)
@@ -150,6 +152,13 @@ namespace Automated.Testing.System.ApplicationServices.Services
             var passwordHash = hasher.HashPassword(request, request.Password);
 
             var refreshToken = GenerateRefreshToken(ip);
+
+            var loginNotExist = await _userRepository.GetByLoginAsync(request.Login) is not null;
+
+            if (!loginNotExist)
+            {
+                throw new  ValidationException( "Username or password is incorrect");
+            }
 
             return  await _userRepository.CreateUserAsync(request.Login, passwordHash, refreshToken);
         }

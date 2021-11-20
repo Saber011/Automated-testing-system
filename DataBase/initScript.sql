@@ -263,11 +263,29 @@ alter table core.test_result
 	add constraint test_result_test_task_response_option_test_task_response_option_id_fk
 		foreign key (test_task_response_option) references core.test_task_response_option;
 
+create table core.dictionary
+(
+	dictionary_id serial
+		constraint dictionary_pk
+			primary key,
+	dictionary_name varchar(120) not null
+);
+
+create unique index dictionary_dictionary_name_uindex
+	on core.dictionary (dictionary_name);
+
+alter table core.dictionary
+	add table_name varchar(120) not null;
+
+
+create sequence core.role_role_id_seq;
+
+alter table core.role alter column role_id set default nextval('core.role_role_id_seq');
+
+alter sequence core.role_role_id_seq owned by core.role.role_id;
 
 
 
-
-
-
-
-
+INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'category', 'category');
+INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'role', 'role');
+INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'article', 'article');

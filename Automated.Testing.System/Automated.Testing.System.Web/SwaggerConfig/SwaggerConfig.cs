@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Automated.Testing.System.Web.SwaggerConfig
 {
@@ -10,7 +14,7 @@ namespace Automated.Testing.System.Web.SwaggerConfig
         /// <summary>
         /// Включает мидлварь Swagger-a.
         /// </summary>
-        public static void AddSwagger(this IServiceCollection services, SwaggerOptions options)
+        public static void AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(config =>
             {
@@ -19,6 +23,9 @@ namespace Automated.Testing.System.Web.SwaggerConfig
                     Version = "v1",
                     Title = "Title",
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                config.IncludeXmlComments(xmlPath);
                 
                 config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -58,13 +65,13 @@ namespace Automated.Testing.System.Web.SwaggerConfig
         {
             app.UseSwagger(config =>
             {
-                config.SerializeAsV2 = false;
+                config.SerializeAsV2 = true;
                 config.RouteTemplate = $"api-docs/{{documentname}}/swagger.json";
             });
 
             app.UseSwaggerUI(config =>
             {
-                config.SwaggerEndpoint($"api-docs/v1/swagger.json", "API");
+                config.SwaggerEndpoint("api-docs/v1/swagger.json", "API");
                 config.RoutePrefix = string.Empty;
                 config.DisplayRequestDuration();
             });
