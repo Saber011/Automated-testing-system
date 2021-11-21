@@ -15,6 +15,7 @@ import { BooleanServiceResponse } from '../models/boolean-service-response';
 import { RefreshTokenArrayServiceResponse } from '../models/refresh-token-array-service-response';
 import { RegisterUserRequest } from '../models/register-user-request';
 import { RevokeTokenRequest } from '../models/revoke-token-request';
+import { UpdaterUserRequest } from '../models/updater-user-request';
 import { UserDto } from '../models/user-dto';
 import { UserDtoArrayServiceResponse } from '../models/user-dto-array-service-response';
 
@@ -35,6 +36,10 @@ export class UserService extends BaseService {
   static readonly ApiUserAuthenticatePostPath = '/api/User/Authenticate';
 
   /**
+   * Авторизация.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `apiUserAuthenticatePost()` instead.
    *
@@ -61,6 +66,10 @@ export class UserService extends BaseService {
   }
 
   /**
+   * Авторизация.
+   *
+   *
+   *
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `apiUserAuthenticatePost$Response()` instead.
    *
@@ -81,6 +90,10 @@ export class UserService extends BaseService {
   static readonly ApiUserRefreshTokenPostPath = '/api/User/RefreshToken';
 
   /**
+   * Получить рефреш токен.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `apiUserRefreshTokenPost()` instead.
    *
@@ -105,6 +118,10 @@ export class UserService extends BaseService {
   }
 
   /**
+   * Получить рефреш токен.
+   *
+   *
+   *
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `apiUserRefreshTokenPost$Response()` instead.
    *
@@ -124,6 +141,10 @@ export class UserService extends BaseService {
   static readonly ApiUserRevokeTokenPostPath = '/api/User/RevokeToken';
 
   /**
+   * Удалить токен.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `apiUserRevokeTokenPost()` instead.
    *
@@ -150,6 +171,10 @@ export class UserService extends BaseService {
   }
 
   /**
+   * Удалить токен.
+   *
+   *
+   *
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `apiUserRevokeTokenPost$Response()` instead.
    *
@@ -170,6 +195,10 @@ export class UserService extends BaseService {
   static readonly ApiUserGetAllUsersGetPath = '/api/User/GetAllUsers';
 
   /**
+   * Получить всех пользователей.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `apiUserGetAllUsersGet()` instead.
    *
@@ -194,6 +223,10 @@ export class UserService extends BaseService {
   }
 
   /**
+   * Получить всех пользователей.
+   *
+   *
+   *
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `apiUserGetAllUsersGet$Response()` instead.
    *
@@ -208,23 +241,27 @@ export class UserService extends BaseService {
   }
 
   /**
-   * Path part for operation apiUserGetUserByIdIdGet
+   * Path part for operation apiUserGetUserByIdGet
    */
-  static readonly ApiUserGetUserByIdIdGetPath = '/api/User/GetUserById/{id}';
+  static readonly ApiUserGetUserByIdGetPath = '/api/User/GetUserById';
 
   /**
+   * Получить пользователя по id.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiUserGetUserByIdIdGet()` instead.
+   * To access only the response body, use `apiUserGetUserByIdGet()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiUserGetUserByIdIdGet$Response(params: {
-    id: number;
+  apiUserGetUserByIdGet$Response(params?: {
+    id?: number;
   }): Observable<StrictHttpResponse<UserDto>> {
 
-    const rb = new RequestBuilder(this.rootUrl, UserService.ApiUserGetUserByIdIdGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, UserService.ApiUserGetUserByIdGetPath, 'get');
     if (params) {
-      rb.path('id', params.id, {});
+      rb.query('id', params.id, {});
     }
 
     return this.http.request(rb.build({
@@ -239,16 +276,20 @@ export class UserService extends BaseService {
   }
 
   /**
+   * Получить пользователя по id.
+   *
+   *
+   *
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiUserGetUserByIdIdGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiUserGetUserByIdGet$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiUserGetUserByIdIdGet(params: {
-    id: number;
+  apiUserGetUserByIdGet(params?: {
+    id?: number;
   }): Observable<UserDto> {
 
-    return this.apiUserGetUserByIdIdGet$Response(params).pipe(
+    return this.apiUserGetUserByIdGet$Response(params).pipe(
       map((r: StrictHttpResponse<UserDto>) => r.body as UserDto)
     );
   }
@@ -259,6 +300,10 @@ export class UserService extends BaseService {
   static readonly ApiUserDeleteUserDeletePath = '/api/User/DeleteUser';
 
   /**
+   * Получить удалить пользователя.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `apiUserDeleteUserDelete()` instead.
    *
@@ -285,6 +330,10 @@ export class UserService extends BaseService {
   }
 
   /**
+   * Получить удалить пользователя.
+   *
+   *
+   *
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `apiUserDeleteUserDelete$Response()` instead.
    *
@@ -305,6 +354,10 @@ export class UserService extends BaseService {
   static readonly ApiUserRegisterUserPostPath = '/api/User/RegisterUser';
 
   /**
+   * Регистрация нового пользователя.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `apiUserRegisterUserPost()` instead.
    *
@@ -331,6 +384,10 @@ export class UserService extends BaseService {
   }
 
   /**
+   * Регистрация нового пользователя.
+   *
+   *
+   *
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `apiUserRegisterUserPost$Response()` instead.
    *
@@ -346,23 +403,81 @@ export class UserService extends BaseService {
   }
 
   /**
-   * Path part for operation apiUserGetRefreshTokensIdRefreshTokensGet
+   * Path part for operation apiUserUpdateUserInfoPut
    */
-  static readonly ApiUserGetRefreshTokensIdRefreshTokensGetPath = '/api/User/GetRefreshTokens/{id}/refresh-tokens';
+  static readonly ApiUserUpdateUserInfoPutPath = '/api/User/UpdateUserInfo';
 
   /**
+   * Обновление информации пользователя.
+   *
+   *
+   *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiUserGetRefreshTokensIdRefreshTokensGet()` instead.
+   * To access only the response body, use `apiUserUpdateUserInfoPut()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiUserUpdateUserInfoPut$Response(params?: {
+    body?: UpdaterUserRequest
+  }): Observable<StrictHttpResponse<BooleanServiceResponse>> {
+
+    const rb = new RequestBuilder(this.rootUrl, UserService.ApiUserUpdateUserInfoPutPath, 'put');
+    if (params) {
+      rb.body(params.body, 'application/*+json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<BooleanServiceResponse>;
+      })
+    );
+  }
+
+  /**
+   * Обновление информации пользователя.
+   *
+   *
+   *
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiUserUpdateUserInfoPut$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiUserUpdateUserInfoPut(params?: {
+    body?: UpdaterUserRequest
+  }): Observable<BooleanServiceResponse> {
+
+    return this.apiUserUpdateUserInfoPut$Response(params).pipe(
+      map((r: StrictHttpResponse<BooleanServiceResponse>) => r.body as BooleanServiceResponse)
+    );
+  }
+
+  /**
+   * Path part for operation apiUserGetRefreshTokensGet
+   */
+  static readonly ApiUserGetRefreshTokensGetPath = '/api/User/GetRefreshTokens';
+
+  /**
+   * Получить рефреш токены.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiUserGetRefreshTokensGet()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiUserGetRefreshTokensIdRefreshTokensGet$Response(params: {
-    id: number;
+  apiUserGetRefreshTokensGet$Response(params?: {
+    id?: number;
   }): Observable<StrictHttpResponse<RefreshTokenArrayServiceResponse>> {
 
-    const rb = new RequestBuilder(this.rootUrl, UserService.ApiUserGetRefreshTokensIdRefreshTokensGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, UserService.ApiUserGetRefreshTokensGetPath, 'get');
     if (params) {
-      rb.path('id', params.id, {});
+      rb.query('id', params.id, {});
     }
 
     return this.http.request(rb.build({
@@ -377,16 +492,20 @@ export class UserService extends BaseService {
   }
 
   /**
+   * Получить рефреш токены.
+   *
+   *
+   *
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiUserGetRefreshTokensIdRefreshTokensGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiUserGetRefreshTokensGet$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiUserGetRefreshTokensIdRefreshTokensGet(params: {
-    id: number;
+  apiUserGetRefreshTokensGet(params?: {
+    id?: number;
   }): Observable<RefreshTokenArrayServiceResponse> {
 
-    return this.apiUserGetRefreshTokensIdRefreshTokensGet$Response(params).pipe(
+    return this.apiUserGetRefreshTokensGet$Response(params).pipe(
       map((r: StrictHttpResponse<RefreshTokenArrayServiceResponse>) => r.body as RefreshTokenArrayServiceResponse)
     );
   }

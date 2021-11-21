@@ -65,7 +65,7 @@ namespace Automated.Testing.System.Web.SwaggerConfig
         {
             app.UseSwagger(config =>
             {
-                config.SerializeAsV2 = true;
+                config.SerializeAsV2 = false;
                 config.RouteTemplate = $"api-docs/{{documentname}}/swagger.json";
             });
 

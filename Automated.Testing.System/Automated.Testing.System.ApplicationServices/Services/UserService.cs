@@ -153,11 +153,11 @@ namespace Automated.Testing.System.ApplicationServices.Services
 
             var refreshToken = GenerateRefreshToken(ip);
 
-            var loginNotExist = await _userRepository.GetByLoginAsync(request.Login) is not null;
+            var user = await _userRepository.GetByLoginAsync(request.Login);
 
-            if (!loginNotExist)
+            if (user is not null)
             {
-                throw new  ValidationException( "Username or password is incorrect");
+                throw new ValidationException("Username or password is incorrect");
             }
 
             return  await _userRepository.CreateUserAsync(request.Login, passwordHash, refreshToken);

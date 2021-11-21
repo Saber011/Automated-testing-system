@@ -10,8 +10,8 @@ using Dapper;
 
 namespace Automated.Testing.System.DataAccess.Postgres.Repositories
 {
-	/// <inheritdoc />
-	public class UserRepository: IUserRepository
+    /// <inheritdoc />
+    public class UserRepository: IUserRepository
     {
         private readonly IPostgresService _postgresService;
 

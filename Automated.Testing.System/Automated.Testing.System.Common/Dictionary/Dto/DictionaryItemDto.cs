@@ -1,6 +1,6 @@
 ﻿namespace Automated.Testing.System.Common.Dictionary.Dto
 {
-    public class DictionaryItemDto
+    public sealed class DictionaryItemDto
     {
         /// <summary>
         /// Id элемента

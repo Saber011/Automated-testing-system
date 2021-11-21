@@ -27,6 +27,14 @@ export const routes: Routes = [
           title: 'home page',
         },
       },
+      {
+        path: rootLinks.dictionary,
+        loadChildren: () => import('./modules/dictionary/dictionary.module').then(m => m.DictionaryModule),
+        data: {
+          preload: true,
+          title: 'dictionary page',
+        },
+      },
     ],
    // canActivate: [AuthGuard],
   },
