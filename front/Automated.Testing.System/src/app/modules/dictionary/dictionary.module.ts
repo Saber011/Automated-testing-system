@@ -10,9 +10,15 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import { DictionaryComponent } from './components/dictionary/dictionary.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
+import { DictionaryDialog } from './components/dictionary-dialog/dictionary-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { DialogBoxComponent } from './components/dialog-box/dialog-box.component';
+import {FateMaterialModule, FateModule} from "fate-editor";
+import {FateMaterialComponent} from "fate-editor/app/fate-material/fate-material.component";
+import { ArticleComponent } from './components/article/article.component';
 
 @NgModule({
-  declarations: [DictionaryComponent],
+  declarations: [DictionaryComponent, DictionaryDialog, DialogBoxComponent, ArticleComponent],
   imports: [
     CommonModule,
     DictionaryRoutingModule,
@@ -25,7 +31,10 @@ import {MatSortModule} from "@angular/material/sort";
     MatGridListModule,
     MatTableModule,
     MatFormFieldModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule,
+    FateMaterialModule,
+    FateModule
   ],
 })
 export class DictionaryModule {}
