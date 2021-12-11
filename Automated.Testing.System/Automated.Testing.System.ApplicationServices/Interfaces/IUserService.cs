@@ -10,21 +10,6 @@ namespace Automated.Testing.System.ApplicationServices.Interfaces
     public interface IUserService
     {
         /// <summary>
-        /// Получить аунтификацию.
-        /// </summary>
-        Task<AuthenticateInfo> AuthenticateAsync(AuthenticateRequest request, string ipAddress);
-        
-        /// <summary>
-        /// Получить рефреш токен.
-        /// </summary>
-        Task<AuthenticateInfo> RefreshTokenAsync(string token, string ipAddress);
-        
-        /// <summary>
-        /// Удалить токен
-        /// </summary>
-        Task<bool> RevokeTokenAsync(string token, string ipAddress);
-        
-        /// <summary>
         /// Получить всех пользователей.
         /// </summary>
         /// <returns></returns>
@@ -39,12 +24,7 @@ namespace Automated.Testing.System.ApplicationServices.Interfaces
         /// Удалить пользователя.
         /// </summary>
         Task<bool> RemoveUserAsync(int id);
-        
-        /// <summary>
-        /// Добавить пользователя.
-        /// </summary>
-        Task<bool> CreateUserAsync(RegisterUserRequest request, string ipAddress);
-        
+
         /// <summary>
         /// Изменить данные пользователя.
         /// </summary>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <AssemblyName>Automated.Testing.System.DataAccess.Postgres</AssemblyName>
         <RootNamespace>Automated.Testing.System.DataAccess.Postgres</RootNamespace>
     </PropertyGroup>

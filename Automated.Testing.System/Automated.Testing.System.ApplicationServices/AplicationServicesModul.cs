@@ -22,7 +22,7 @@ namespace Automated.Testing.System.ApplicationServices
                 //services
                 services.AddScoped<IUserService, UserService>();
                 services.AddScoped<IDictionaryService, DictionaryService>();
-                
+                services.AddScoped<IAccountService, AccountService>();
             }
     }
 }

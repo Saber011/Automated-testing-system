@@ -54,14 +54,6 @@
             Api для работы со справочниками
             </summary>
         </member>
-        <member name="M:Automated.Testing.System.Web.Controllers.TestController.GetAllDictionary">
-            <summary>
-            Получить все справочники
-            </summary>
-            <response code = "200" > Успешное выполнение.</response>
-            <response code = "401" > Данный запрос требует аутентификации.</response>
-            <response code = "500" > Непредвиденная ошибка сервера.</response>
-        </member>
         <member name="T:Automated.Testing.System.Web.Controllers.UserController">
             <summary>
             Api для работы с пользователями
