@@ -6,12 +6,13 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Automated.Testing.System.ApplicationServices.Interfaces;
 using Automated.Testing.System.Common.User.Dto;
 using Automated.Testing.System.Common.User.Dto.Request;
 using Automated.Testing.System.Core.Core;
-using Automated.Testing.System.DataAccess.Postgres.Entities;
-using Automated.Testing.System.DataAccess.Postgres.Repositories.Interfaces;
+using Automated.Testing.System.DataAccess.Abstractions.Entities;
+using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
@@ -23,11 +24,13 @@ namespace Automated.Testing.System.ApplicationServices.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly AuthenticationSettingsConfig _appSettings;
+        private readonly IMapper _mapper;
 
         public AccountService(
-            IOptions<AuthenticationSettingsConfig> appSettings, IUserRepository userRepository)
+            IOptions<AuthenticationSettingsConfig> appSettings, IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
             _appSettings = appSettings.Value;
         }
 
@@ -39,7 +42,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
             var user = await _userRepository.GetByLoginAsync(request.Username);
             var hasher = new PasswordHasher<RegisterUserRequest>();
 
-            if (user == null || hasher.VerifyHashedPassword(MapToRequest(user), user.Password, request.Password) == PasswordVerificationResult.Failed)
+            if (user == null || hasher.VerifyHashedPassword(_mapper.Map<RegisterUserRequest>(user), user.Password, request.Password) == PasswordVerificationResult.Failed)
             {
                 throw new  ValidationException( "Username or password is incorrect");
             }
@@ -164,31 +167,6 @@ namespace Automated.Testing.System.ApplicationServices.Services
                 Expires = DateTime.UtcNow.AddDays(7),
                 Created = DateTime.UtcNow,
                 CreatedByIp = ipAddress
-            };
-        }
-
-        private static UserDto[] MapToDto(User[] users)
-        {
-            return users.Select(MapToDto)
-                .ToArray();
-        }
-        
-        private static UserDto MapToDto(User user)
-        {
-            return new()
-            {
-                Id = user.Id,
-                Login = user.Login,
-                RefreshTokens = user.RefreshTokens
-            };
-        }
-        
-        private RegisterUserRequest MapToRequest(User user)
-        {
-            return new()
-            {
-                Password = user.Password,
-                Login = user.Login,
             };
         }
     }

@@ -4,6 +4,48 @@
         <name>Automated.Testing.System.Web</name>
     </assembly>
     <members>
+        <member name="T:Automated.Testing.System.Web.Controllers.AccountController">
+            <summary>
+            Api для работы с пользователями
+            </summary>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.AccountController.Authenticate(Automated.Testing.System.Common.User.Dto.Request.AuthenticateRequest)">
+            <summary>
+            Авторизация
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.AccountController.RefreshToken">
+            <summary>
+            Получить рефреш токен
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.AccountController.RevokeToken(Automated.Testing.System.Common.User.Dto.Request.RevokeTokenRequest)">
+            <summary>
+            Удалить токен.
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.AccountController.RegisterUser(Automated.Testing.System.Common.User.Dto.Request.RegisterUserRequest)">
+            <summary>
+            Регистрация нового пользователя.
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.AccountController.GetRefreshTokens(System.Int32)">
+            <summary>
+            Получить рефреш токены
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
         <member name="T:Automated.Testing.System.Web.Controllers.DictionaryController">
             <summary>
             Api для работы со справочниками
@@ -59,27 +101,6 @@
             Api для работы с пользователями
             </summary>
         </member>
-        <member name="M:Automated.Testing.System.Web.Controllers.UserController.Authenticate(Automated.Testing.System.Common.User.Dto.Request.AuthenticateRequest)">
-            <summary>
-            Авторизация
-            </summary>
-            <response code = "200" > Успешное выполнение.</response>
-            <response code = "500" > Непредвиденная ошибка сервера.</response>
-        </member>
-        <member name="M:Automated.Testing.System.Web.Controllers.UserController.RefreshToken">
-            <summary>
-            Получить рефреш токен
-            </summary>
-            <response code = "200" > Успешное выполнение.</response>
-            <response code = "500" > Непредвиденная ошибка сервера.</response>
-        </member>
-        <member name="M:Automated.Testing.System.Web.Controllers.UserController.RevokeToken(Automated.Testing.System.Common.User.Dto.Request.RevokeTokenRequest)">
-            <summary>
-            Удалить токен.
-            </summary>
-            <response code = "200" > Успешное выполнение.</response>
-            <response code = "500" > Непредвиденная ошибка сервера.</response>
-        </member>
         <member name="M:Automated.Testing.System.Web.Controllers.UserController.GetAllUsers">
             <summary>
             Получить всех пользователей.
@@ -99,14 +120,6 @@
         <member name="M:Automated.Testing.System.Web.Controllers.UserController.DeleteUser(System.Int32)">
             <summary>
             Получить удалить пользователя.
-            </summary>
-            <response code = "200" > Успешное выполнение.</response>
-            <response code = "401" > Данный запрос требует аутентификации.</response>
-            <response code = "500" > Непредвиденная ошибка сервера.</response>
-        </member>
-        <member name="M:Automated.Testing.System.Web.Controllers.UserController.RegisterUser(Automated.Testing.System.Common.User.Dto.Request.RegisterUserRequest)">
-            <summary>
-            Регистрация нового пользователя.
             </summary>
             <response code = "200" > Успешное выполнение.</response>
             <response code = "401" > Данный запрос требует аутентификации.</response>

@@ -1,20 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using Automated.Testing.System.ApplicationServices.Interfaces;
 using Automated.Testing.System.Common.User.Dto;
 using Automated.Testing.System.Common.User.Dto.Request;
 using Automated.Testing.System.Core.Core;
-using Automated.Testing.System.DataAccess.Postgres.Entities;
-using Automated.Testing.System.DataAccess.Postgres.Repositories.Interfaces;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Identity;
+using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
 
 namespace Automated.Testing.System.ApplicationServices.Services
 {
@@ -22,13 +12,12 @@ namespace Automated.Testing.System.ApplicationServices.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly AuthenticationSettingsConfig _appSettings;
+        private readonly IMapper _mapper;
 
-        public UserService(
-            IOptions<AuthenticationSettingsConfig> appSettings, IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
-            _appSettings = appSettings.Value;
+            _mapper = mapper;
         }
 
         /// <inheritdoc />
@@ -36,7 +25,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
         {
             var users = await _userRepository.GetAllAsync();
             
-            return MapToDto(users);
+            return _mapper.Map<UserDto[]>(users);
         }
 
         /// <inheritdoc />
@@ -48,7 +37,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
             var token = await _userRepository.GetUserTokens(user.Id);
             user.RefreshTokens = token;
             
-            return MapToDto(user);
+            return _mapper.Map<UserDto>(user);
         }
 
         /// <inheritdoc />
@@ -59,39 +48,12 @@ namespace Automated.Testing.System.ApplicationServices.Services
             return await _userRepository.RemoveUserAsync(id);
         }
 
-
-
         /// <inheritdoc />
         public async Task<bool> UpdateUserInfoAsync(UpdaterUserRequest request)
         {
             Guard.NotNull(request, nameof(request));
             
             return await _userRepository.UpdateUserInfoAsync(request.UserId, request.Login, request.Password);
-        }
-
-        private static UserDto[] MapToDto(User[] users)
-        {
-            return users.Select(MapToDto)
-                .ToArray();
-        }
-        
-        private static UserDto MapToDto(User user)
-        {
-            return new()
-            {
-                Id = user.Id,
-                Login = user.Login,
-                RefreshTokens = user.RefreshTokens
-            };
-        }
-        
-        private RegisterUserRequest MapToRequest(User user)
-        {
-            return new()
-            {
-                Password = user.Password,
-                Login = user.Login,
-            };
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Automated.Testing.System.ApplicationServices.Interfaces;
 using Automated.Testing.System.Common.Dictionary.Dto;
 using Automated.Testing.System.Common.Dictionary.Dto.Request;
 using Automated.Testing.System.Core.Core;
-using Automated.Testing.System.DataAccess.Postgres.Entities;
-using Automated.Testing.System.DataAccess.Postgres.Repositories.Interfaces;
-using NotImplementedException = System.NotImplementedException;
+using Automated.Testing.System.DataAccess.Abstractions.Entities;
+using Automated.Testing.System.DataAccess.Interfaces;
 
 namespace Automated.Testing.System.ApplicationServices.Services
 {
@@ -15,16 +15,18 @@ namespace Automated.Testing.System.ApplicationServices.Services
     public class DictionaryService : IDictionaryService
     {
         private readonly IDictionaryRepository _dictionaryRepository;
+        private readonly IMapper _mapper;
 
-        public DictionaryService(IDictionaryRepository dictionaryRepository)
+        public DictionaryService(IDictionaryRepository dictionaryRepository, IMapper mapper)
         {
             _dictionaryRepository = dictionaryRepository;
+            _mapper = mapper;
         }
         
         /// <inheritdoc />
         public async Task<DictionaryDto[]> GetAllAsync()
         {
-            return MapToDto(await _dictionaryRepository.GetAllDictionaryAsync());
+            return _mapper.Map<DictionaryDto[]>(await _dictionaryRepository.GetAllDictionaryAsync());
         }
 
         /// <inheritdoc />
@@ -32,7 +34,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
         {
             Guard.GreaterThanZero(id, nameof(id));
             
-            return MapToDto(await _dictionaryRepository.GetDictionaryElementsByDictionaryIdAsync(id));
+            return _mapper.Map<DictionaryItemDto[]>(await _dictionaryRepository.GetDictionaryElementsByDictionaryIdAsync(id));
         }
 
         /// <inheritdoc />
@@ -85,26 +87,6 @@ namespace Automated.Testing.System.ApplicationServices.Services
             }
 
             return false;
-        }
-        
-        private static DictionaryDto[] MapToDto(Dictionary[] dictionaries)
-        {
-            return dictionaries.Select(item => new DictionaryDto()
-                {
-                    DictionaryId = item.DictionaryId,
-                    Name = item.Name
-                })
-                .ToArray();
-        }
-        
-        private static DictionaryItemDto[] MapToDto(DictionaryItem[] dictionaries)
-        {
-            return dictionaries.Select(item => new DictionaryItemDto()
-                {
-                    ElementId = item.ElementId,
-                    Name = item.Name
-                })
-                .ToArray();
         }
     }
 }

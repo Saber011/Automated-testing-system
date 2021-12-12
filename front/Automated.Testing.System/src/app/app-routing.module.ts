@@ -35,6 +35,14 @@ export const routes: Routes = [
           title: 'dictionary page',
         },
       },
+      {
+        path: rootLinks.administration,
+        loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule),
+        data: {
+          preload: true,
+          title: 'admin page',
+        },
+      },
     ],
    // canActivate: [AuthGuard],
   },

@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Automated.Testing.System.Core.Core;
-using Automated.Testing.System.DataAccess.Postgres.Entities;
+using Automated.Testing.System.DataAccess.Abstractions.Entities;
+using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
 using Automated.Testing.System.DataAccess.Postgres.Extensions;
-using Automated.Testing.System.DataAccess.Postgres.Repositories.Interfaces;
 using Automated.Testing.System.DatabaseProvider.Postgres;
 using Dapper;
 

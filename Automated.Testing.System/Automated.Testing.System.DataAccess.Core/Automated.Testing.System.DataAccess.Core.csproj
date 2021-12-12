@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>Automated.Testing.System.DataAccess.Abstractions</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Automated.Testing.System.Core\Automated.Testing.System.Core.csproj" />
+    </ItemGroup>
+
+</Project>

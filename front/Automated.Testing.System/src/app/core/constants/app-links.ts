@@ -3,4 +3,5 @@ export const rootLinks = {
   login: 'login',
   category: 'category',
   dictionary: 'dictionary',
+  administration: 'administration',
 };

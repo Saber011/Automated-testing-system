@@ -1,6 +1,11 @@
 <mat-grid-list cols="2" rowHeight="2:1">
   <mat-grid-tile>Прохождение тестов</mat-grid-tile>
-  <mat-grid-tile [ngClass] = "'dictionary'"><a [routerLink]="['/dictionary']">Введение справочной информации</a></mat-grid-tile>
+  <mat-grid-tile [ngClass] = "'dictionary'">
+    <a [routerLink]="['/dictionary']">Введение справочной информации</a>
+  </mat-grid-tile>
   <mat-grid-tile>Создание тестов</mat-grid-tile>
   <mat-grid-tile>Обучающий материал</mat-grid-tile>
+  <mat-grid-tile>
+    <a [routerLink]="['/administration']">Администрирование</a>
+  </mat-grid-tile>
 </mat-grid-list>
