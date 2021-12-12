@@ -3,6 +3,7 @@ using System.Text;
 using Automated.Testing.System.ApplicationServices;
 using Automated.Testing.System.Core;
 using Automated.Testing.System.Core.Core;
+using Automated.Testing.System.UseCases;
 using Automated.Testing.System.Utils.Modules;
 using Automated.Testing.System.Web.SwaggerConfig;
 using Microsoft.AspNetCore.Builder;

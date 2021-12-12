@@ -6,17 +6,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.DatabaseProvider.Postgres", "Automated.Testing.System.DatabaseProvider.Postgres\Automated.Testing.System.DatabaseProvider.Postgres.csproj", "{69AD9EBE-734F-4F44-9DCB-B446B0E15A91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.ApplicationServices", "Automated.Testing.System.ApplicationServices\Automated.Testing.System.ApplicationServices.csproj", "{180D222E-734B-45F9-B4E0-B2296499FE52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.UseCases", "Automated.Testing.System.UseCases\Automated.Testing.System.UseCases.csproj", "{180D222E-734B-45F9-B4E0-B2296499FE52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.Utils", "Automated.Testing.System.Utils\Automated.Testing.System.Utils.csproj", "{E3DBE5D0-1443-4239-AD8D-0DA2862943BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.Core", "Automated.Testing.System.Core\Automated.Testing.System.Core.csproj", "{8630AB2D-D5C9-4748-9996-126D2D409F51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.Common", "Automated.Testing.System.Common\Automated.Testing.System.Common.csproj", "{6C7D7A57-F9B7-4DF5-87C2-3EEC5663AB33}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.IntegrationTests", "Automated.Testing.System.IntegrationTests\Automated.Testing.System.IntegrationTests.csproj", "{901FF5ED-4837-4B09-8129-A4F728098592}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.DataAccess.Core", "Automated.Testing.System.DataAccess.Core\Automated.Testing.System.DataAccess.Core.csproj", "{03A309CF-8236-4DBB-9317-FD8ADA9EC573}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automated.Testing.System.ApplicationServices", "Automated.Testing.System.ApplicationServices\Automated.Testing.System.ApplicationServices.csproj", "{11B7FF8D-BF13-4BA8-81C2-3E0C9E80FF18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,10 +48,6 @@ Global
 		{8630AB2D-D5C9-4748-9996-126D2D409F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8630AB2D-D5C9-4748-9996-126D2D409F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8630AB2D-D5C9-4748-9996-126D2D409F51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C7D7A57-F9B7-4DF5-87C2-3EEC5663AB33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C7D7A57-F9B7-4DF5-87C2-3EEC5663AB33}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C7D7A57-F9B7-4DF5-87C2-3EEC5663AB33}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C7D7A57-F9B7-4DF5-87C2-3EEC5663AB33}.Release|Any CPU.Build.0 = Release|Any CPU
 		{901FF5ED-4837-4B09-8129-A4F728098592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{901FF5ED-4837-4B09-8129-A4F728098592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{901FF5ED-4837-4B09-8129-A4F728098592}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,5 +56,9 @@ Global
 		{03A309CF-8236-4DBB-9317-FD8ADA9EC573}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03A309CF-8236-4DBB-9317-FD8ADA9EC573}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03A309CF-8236-4DBB-9317-FD8ADA9EC573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11B7FF8D-BF13-4BA8-81C2-3E0C9E80FF18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B7FF8D-BF13-4BA8-81C2-3E0C9E80FF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B7FF8D-BF13-4BA8-81C2-3E0C9E80FF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B7FF8D-BF13-4BA8-81C2-3E0C9E80FF18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

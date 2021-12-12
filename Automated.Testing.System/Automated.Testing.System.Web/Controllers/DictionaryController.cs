@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Automated.Testing.System.ApplicationServices.Interfaces;
-using Automated.Testing.System.Common.Dictionary.Dto;
-using Automated.Testing.System.Common.Dictionary.Dto.Request;
 using Automated.Testing.System.Core.Execute;
 using Automated.Testing.System.Core.Execute.models;
-using Microsoft.AspNetCore.Authorization;
+using Automated.Testing.System.UseCases.Handlers.Dictionary.Dto;
+using Automated.Testing.System.UseCases.Handlers.Dictionary.Queries.GetAllDictionary;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Automated.Testing.System.Web.Controllers
@@ -18,11 +17,11 @@ namespace Automated.Testing.System.Web.Controllers
     [Produces("application/json")]
     public class DictionaryController : Controller
     {
-        private readonly IDictionaryService _dictionaryService;
+        private readonly IMediator _mediator;
 
-        public DictionaryController(IDictionaryService dictionaryService)
+        public DictionaryController(IMediator mediator)
         {
-            _dictionaryService = dictionaryService;
+            _mediator = mediator;
         }
         
         /// <summary>
@@ -34,55 +33,7 @@ namespace Automated.Testing.System.Web.Controllers
         [HttpGet]
         public async Task<ServiceResponse<DictionaryDto[]>> GetAllDictionary()
         {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.GetAllAsync());
-        }
-
-        /// <summary>
-        /// Получить элементы словаря по справочнику
-        /// </summary>
-        /// <response code = "200" > Успешное выполнение.</response>
-        /// <response code = "401" > Данный запрос требует аутентификации.</response>
-        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
-        [HttpGet]
-        public async Task<ServiceResponse<DictionaryItemDto[]>> GetDictionaryElementsByDictionaryId(int id)
-        {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.GetByIdAsync(id));
-        }
-        
-        /// <summary>
-        /// Создать новый элемент
-        /// </summary>
-        /// <response code = "200" > Успешное выполнение.</response>
-        /// <response code = "401" > Данный запрос требует аутентификации.</response>
-        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
-        [HttpPost]
-        public async Task<ServiceResponse<bool>> CreateDictionaryItem(CreateDictionaryElementRequest request)
-        {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.CreateDictionaryItemAsync(request));
-        }
-        
-        /// <summary>
-        /// Обновить данные элемента словаря
-        /// </summary>
-        /// <response code = "200" > Успешное выполнение.</response>
-        /// <response code = "401" > Данный запрос требует аутентификации.</response>
-        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
-        [HttpPut]
-        public async Task<ServiceResponse<bool>> UpdateDictionaryItem(UpdateDictionaryElementRequest request)
-        {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.UpdateDictionaryItemAsync(request));
-        }
-        
-        /// <summary>
-        /// Удалить элемент словаря.
-        /// </summary>
-        /// <response code = "200" > Успешное выполнение.</response>
-        /// <response code = "401" > Данный запрос требует аутентификации.</response>
-        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
-        [HttpDelete]
-        public async Task<ServiceResponse<bool>> DeleteDictionaryItem(DeleteDictionaryElementRequest request)
-        {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.DeleteDictionaryItemAsync(request));
+            return ServiceResponseHelper.ConvertToServiceResponse(await _mediator.Send(new GetAllDictionaryRequest()));
         }
     }
 }

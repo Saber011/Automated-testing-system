@@ -6,12 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="MediatR" Version="9.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.12" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Automated.Testing.System.ApplicationServices\Automated.Testing.System.ApplicationServices.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.UseCases\Automated.Testing.System.UseCases.csproj" />
       <ProjectReference Include="..\Automated.Testing.System.Common\Automated.Testing.System.Common.csproj" />
       <ProjectReference Include="..\Automated.Testing.System.Core\Automated.Testing.System.Core.csproj" />
     </ItemGroup>

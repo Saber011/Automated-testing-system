@@ -2,6 +2,7 @@
 using Automated.Testing.System.Common.User.Dto;
 using Automated.Testing.System.Common.User.Dto.Request;
 using Automated.Testing.System.DataAccess.Abstractions.Entities;
+using DictionaryDto = Automated.Testing.System.UseCases.Handlers.Dictionary.Dto.DictionaryDto;
 
 namespace Automated.Testing.System.ApplicationServices.Profile
 {
