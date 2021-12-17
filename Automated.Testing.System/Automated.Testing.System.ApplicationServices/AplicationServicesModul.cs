@@ -1,8 +1,7 @@
-﻿using Automated.Testing.System.ApplicationServices.Interfaces;
+﻿using System;
+using Automated.Testing.System.ApplicationServices.Interfaces;
 using Automated.Testing.System.ApplicationServices.Services;
-using Automated.Testing.System.DataAccess.Postgres.Repositories;
-using Automated.Testing.System.DataAccess.Postgres.Repositories.Interfaces;
-using Automated.Testing.System.DatabaseProvider.Postgres;
+using Automated.Testing.System.DataAccess.Postgres;
 using Automated.Testing.System.Utils.Modules;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,15 +11,14 @@ namespace Automated.Testing.System.ApplicationServices
         {
             public override void Load(IServiceCollection services)
             {
-                // database provider
-                services.AddScoped<IPostgresService, PostgresService>();
-                
-                // repository
-                services.AddScoped<IUserRepository, UserRepository>();
+                services.RegisterModule<PostgresDataAccessModule>(Configuration);
                 
                 //services
                 services.AddScoped<IUserService, UserService>();
+                services.AddScoped<IDictionaryService, DictionaryService>();
+                services.AddScoped<IAccountService, AccountService>();
                 
+                services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             }
     }
 }

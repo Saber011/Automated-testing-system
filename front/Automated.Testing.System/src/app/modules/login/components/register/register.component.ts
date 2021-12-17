@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../../core";
 import {UserService} from "../../../../api/services/user.service";
+import {AccountService} from "../../../../api/services/account.service";
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private readonly userService: UserService,
+              private readonly accountService: AccountService,
               private fb: FormBuilder){
     this.form = this.fb.group({
     username: ['', Validators.email],
@@ -31,11 +32,10 @@ export class RegisterComponent implements OnInit {
     const username = this.form.get('username')?.value;
     const password = this.form.get('password')?.value;
 
-    this.userService.apiUserRegisterUserPost({body: {password: password, login: username}})
+    this.accountService.apiAccountRegisterUserPost({body: {password: password, login: username}})
       .subscribe(response => {
         if(response.content)
         {
-          alert('win');
           this.router.navigate(['login']);
         }
       })

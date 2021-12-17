@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Automated.Testing.System.Web
 {
+    // todo https://habr.com/ru/company/jugru/blog/505890/
     internal sealed class ExceptionHandlingMiddleware : IMiddleware
     {
         private readonly ILogger<ExceptionHandlingMiddleware> _logger;

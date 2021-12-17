@@ -28,7 +28,7 @@ namespace Automated.Testing.System.IntegrationTests
         }
 
         [TestMethod]
-        public async Task ShouldExpect401WhenLoginWithInvalidCredentials()
+        public async Task ShouldExpectWhenLoginWithInvalidCredentials()
         {
             var credentials = new AuthenticateRequest
             {

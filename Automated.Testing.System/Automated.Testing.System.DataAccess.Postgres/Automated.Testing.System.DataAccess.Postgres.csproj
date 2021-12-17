@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <AssemblyName>Automated.Testing.System.DataAccess.Postgres</AssemblyName>
         <RootNamespace>Automated.Testing.System.DataAccess.Postgres</RootNamespace>
     </PropertyGroup>
@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Automated.Testing.System.Core\Automated.Testing.System.Core.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.DataAccess.Core\Automated.Testing.System.DataAccess.Core.csproj" />
       <ProjectReference Include="..\Automated.Testing.System.DatabaseProvider.Postgres\Automated.Testing.System.DatabaseProvider.Postgres.csproj" />
     </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿namespace Automated.Testing.System.DataAccess.Postgres.Entities
+﻿namespace Automated.Testing.System.DataAccess.Abstractions.Entities
 {
     public class Category
     {

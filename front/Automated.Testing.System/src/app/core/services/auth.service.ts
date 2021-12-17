@@ -8,6 +8,7 @@ import { AuthenticateInfoServiceResponse } from "../../api/models/authenticate-i
 import { UserService} from "../../api/services/user.service";
 import {StrictHttpResponse} from "../../api/strict-http-response";
 import {AuthenticateInfo} from "../../api/models/authenticate-info";
+import {AccountService} from "../../api/services/account.service";
 
 
 @Injectable({
@@ -28,7 +29,7 @@ export class AuthService implements OnDestroy {
       }
       if (event.key === 'login-event') {
         this.stopTokenTimer();
-        this.userService.apiUserRefreshTokenPost()
+        this.accountService.apiAccountRefreshTokenPost()
           .subscribe(data => {
             this._user.next({
             });
@@ -39,7 +40,7 @@ export class AuthService implements OnDestroy {
     }
   }
 
-  constructor(private router: Router, private readonly userService: UserService ) {
+  constructor(private router: Router, private readonly accountService: AccountService ) {
     window.addEventListener('storage', this.storageEventListener.bind(this));
   }
 
@@ -49,7 +50,7 @@ export class AuthService implements OnDestroy {
 
   login(username: string, password: string) : Observable<boolean> {
     var subject = new Subject<boolean>();
-      this.userService.apiUserAuthenticatePost({body: {password: password, username: username }})
+      this.accountService.apiAccountAuthenticatePost({body: {password: password, username: username }})
       .subscribe(data => {
         this._user.next({
           login: data.content?.login,
@@ -86,7 +87,7 @@ export class AuthService implements OnDestroy {
       this.clearLocalStorage();
       return of(null);
     }
-  return this.userService.apiUserRefreshTokenPost()
+  return this.accountService.apiAccountRefreshTokenPost()
       .pipe(
         map(data => {
           this._user.next({

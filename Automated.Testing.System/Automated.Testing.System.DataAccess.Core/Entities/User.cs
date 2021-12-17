@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Automated.Testing.System.Core.Core;
+﻿using Automated.Testing.System.Core.Core;
 
-namespace Automated.Testing.System.DataAccess.Postgres.Entities
+namespace Automated.Testing.System.DataAccess.Abstractions.Entities
 {
     /// <summary>
     /// Пользователь.

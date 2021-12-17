@@ -31,15 +31,7 @@ namespace Automated.Testing.System.Web
             services.Configure<PostgresConfig>(Configuration.GetSection("Postgres"));
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AuthenticationSettingsConfig>(appSettingsSection);
-            services.AddSwagger(new SwaggerOptions
-            {
-                HostName = "Backand",
-                BasePath = AppContext.BaseDirectory,
-                FileNames = new[]
-                {
-                    "Automated.Testing.System",
-                },
-            });
+            services.AddSwagger();
             var appSettings = appSettingsSection.Get<AuthenticationSettingsConfig>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Automated.Testing.System.Core.Core;
-using Automated.Testing.System.DataAccess.Postgres.Entities;
+using Automated.Testing.System.DataAccess.Abstractions.Entities;
 
-namespace Automated.Testing.System.DataAccess.Postgres.Repositories.Interfaces
+namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
 {
     /// <summary>
     /// Репозиторий для работы с пользователями.

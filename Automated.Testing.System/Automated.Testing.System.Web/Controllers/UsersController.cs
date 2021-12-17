@@ -13,7 +13,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Automated.Testing.System.Web.Controllers
 {
-    [Authorize]
+    /// <summary>
+    /// Api для работы с пользователями
+    /// </summary>
+    //  [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Produces("application/json")]
@@ -26,92 +29,67 @@ namespace Automated.Testing.System.Web.Controllers
             _userService = userService;
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<ServiceResponse<AuthenticateInfo>> Authenticate(AuthenticateRequest request)
-        {
-            var response = await _userService.AuthenticateAsync(request, IpAddress());
-
-            SetTokenCookie(response.RefreshToken);
-
-            return ServiceResponseHelper.ConvertToServiceResponse(response);
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<ServiceResponse<AuthenticateInfo>> RefreshToken()
-        {
-            var refreshToken = Request.Cookies["refreshToken"];
-            var response = await _userService.RefreshTokenAsync(refreshToken, IpAddress());
-            
-            SetTokenCookie(response.RefreshToken);
-
-            return ServiceResponseHelper.ConvertToServiceResponse(response);
-        }
-
-        [HttpPost]
-        public async Task<ServiceResponse<bool>> RevokeToken([FromBody] RevokeTokenRequest model)
-        {
-            var token = model.Token ?? Request.Cookies["refreshToken"];
-
-            if (string.IsNullOrEmpty(token))
-                throw new  ValidationException("Token is required");
-
-            var response = await _userService.RevokeTokenAsync(token, IpAddress());
-
-            return ServiceResponseHelper.ConvertToServiceResponse(response);
-        }
-
+        /// <summary>
+        /// Получить всех пользователей.
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
         [HttpGet]
         public async Task<ServiceResponse<UserDto[]>> GetAllUsers()
         {
             return ServiceResponseHelper.ConvertToServiceResponse(await  _userService.GetAllUsersAsync());
         }
-
-        [HttpGet("{id}")]
+        
+        /// <summary>
+        /// Получить пользователя по id.
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
+        [HttpGet]
         public async Task<UserDto> GetUserById(int id)
         {
             return await _userService.GetUserByIdAsync(id);
         }
         
+        /// <summary>
+        /// Получить удалить пользователя.
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
         [HttpDelete]
         public async  Task<ServiceResponse<bool>> DeleteUser(int id)
         {
             return ServiceResponseHelper.ConvertToServiceResponse(await _userService.RemoveUserAsync(id));
         }
-        
-        [HttpPost]
+
+        /// <summary>
+        /// Обновление информации пользователя.
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
+        [HttpPut]
         [AllowAnonymous]
-        public async Task<ServiceResponse<bool>> RegisterUser(RegisterUserRequest request)
+        public async Task<ServiceResponse<bool>> UpdateUserInfo(UpdaterUserRequest request)
         {
-            return ServiceResponseHelper.ConvertToServiceResponse(await _userService.CreateUserAsync(request, IpAddress()));
+            return ServiceResponseHelper.ConvertToServiceResponse(await _userService.UpdateUserInfoAsync(request));
         }
         
-        [HttpGet("{id}/refresh-tokens")]
+        /// <summary>
+        /// Получить рефреш токены
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
+        [HttpGet]
         public async Task<ServiceResponse<RefreshToken[]>> GetRefreshTokens(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
 
             return ServiceResponseHelper.ConvertToServiceResponse(user.RefreshTokens);
-        }
-
-        private void SetTokenCookie(string token)
-        {
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
-            Response.Cookies.Append("refreshToken", token, cookieOptions);
-        }
-
-        private string IpAddress()
-        {
-            if (Request.Headers.ContainsKey("X-Forwarded-For"))
-                return Request.Headers["X-Forwarded-For"];
-            return HttpContext.Connection.RemoteIpAddress != null
-                ? HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString() 
-                : string.Empty;
         }
     }
 }

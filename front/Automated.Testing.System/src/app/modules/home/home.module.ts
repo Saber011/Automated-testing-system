@@ -7,7 +7,7 @@ import {MatCardModule} from '@angular/material/card';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import { HomeComponent } from './components/home/home.component';
-
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [HomeComponent],
@@ -19,7 +19,8 @@ import { HomeComponent } from './components/home/home.component';
     MatCardModule,
     FormsModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatGridListModule
   ],
 })
 export class HomeModule {}
