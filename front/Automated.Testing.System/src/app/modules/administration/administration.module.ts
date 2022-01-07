@@ -12,9 +12,10 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatDialogModule} from "@angular/material/dialog";
 import {FateMaterialModule, FateModule} from "fate-editor";
 import { AdministrationComponent } from './administration/administration.component';
+import { UserDialog } from './user-dialog/user-dialog.component';
 
 @NgModule({
-  declarations: [AdministrationComponent],
+  declarations: [AdministrationComponent, UserDialog],
   imports: [
     CommonModule,
     AdministrationRoutingModule,
@@ -30,7 +31,7 @@ import { AdministrationComponent } from './administration/administration.compone
     MatSortModule,
     MatDialogModule,
     FateMaterialModule,
-    FateModule
+    FateModule,
   ],
 })
 export class AdministrationModule {}

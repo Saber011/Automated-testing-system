@@ -7,7 +7,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Automated.Testing.System.Common\Automated.Testing.System.Common.csproj" />
       <ProjectReference Include="..\Automated.Testing.System.DataAccess.Core\Automated.Testing.System.DataAccess.Core.csproj" />
-      <ProjectReference Include="..\Automated.Testing.System.DataAccess.Postgres\Automated.Testing.System.DataAccess.Postgres.csproj" />
       <ProjectReference Include="..\Automated.Testing.System.Utils\Automated.Testing.System.Utils.csproj" />
     </ItemGroup>
 
