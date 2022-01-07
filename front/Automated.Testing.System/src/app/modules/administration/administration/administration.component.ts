@@ -1,12 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {DictionaryDto} from "../../../api/models/dictionary-dto";
 import {MatSort} from "@angular/material/sort";
-import {DictionaryService} from "../../../api/services/dictionary.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DictionaryDialog} from "../../dictionary/components/dictionary-dialog/dictionary-dialog.component";
 import {UserService} from "../../../api/services/user.service";
 import {UserDto} from "../../../api/models/user-dto";
+import {UserDialog} from "../user-dialog/user-dialog.component";
 
 @Component({
   selector: 'app-administration',
@@ -14,7 +12,7 @@ import {UserDto} from "../../../api/models/user-dto";
   styleUrls: ['./administration.component.css']
 })
 export class AdministrationComponent implements OnInit {
-  displayedColumns: string[] = ['Id', 'login', 'change'];
+  displayedColumns: string[] = ['Id', 'login', 'edit', 'delete'];
   dataSource!: MatTableDataSource<UserDto>;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -22,10 +20,10 @@ export class AdministrationComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.loadCategories();
+    this.refreshData();
   }
 
-  private loadCategories() {
+  private refreshData() {
     this.userService.apiUserGetAllUsersGet()
       .subscribe(value => {
         if(value.content) {
@@ -40,17 +38,23 @@ export class AdministrationComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(dictionaryId: number): void {
-    const dialogRef = this.dialog.open(DictionaryDialog, {
+  openDialog(userId: number): void {
+    const dialogRef = this.dialog.open(UserDialog, {
       width: '80%',
       data: {
-        id: dictionaryId
+        id: userId,
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+      console.log(result);
+      });
+  }
+
+
+  deleteUser(userId: number): void {
+    this.userService.apiUserDeleteUserDelete({id: userId})
+      .subscribe(value => this.refreshData());
   }
 
 }

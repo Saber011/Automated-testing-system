@@ -1,8 +1,14 @@
 using System;
 using System.Text;
 using Automated.Testing.System.ApplicationServices;
+using Automated.Testing.System.ApplicationServices.Interfaces;
+using Automated.Testing.System.ApplicationServices.Services;
 using Automated.Testing.System.Core;
 using Automated.Testing.System.Core.Core;
+using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
+using Automated.Testing.System.DataAccess.Interfaces;
+using Automated.Testing.System.DataAccess.Postgres.Repositories;
+using Automated.Testing.System.DatabaseProvider.Postgres;
 using Automated.Testing.System.Utils.Modules;
 using Automated.Testing.System.Web.SwaggerConfig;
 using Microsoft.AspNetCore.Builder;
@@ -53,8 +59,14 @@ namespace Automated.Testing.System.Web
                     };
                 });
 
-            services.RegisterModule<CoreModule>(Configuration);
-            services.RegisterModule<ApplicationServicesModule>(Configuration);
+            services.AddScoped<IPostgresService, PostgresService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IDictionaryRepository, DictionaryRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDictionaryService, DictionaryService>();
+            services.AddScoped<IAccountService, AccountService>();
+                
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddTransient<ExceptionHandlingMiddleware>();
         }
         
