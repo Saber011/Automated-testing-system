@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./front/Automated.Testing.System/
     steps:
       - uses: actions/checkout@v2
       # Setup key
@@ -16,9 +19,7 @@ jobs:
       - run: echo "$" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
       # Build
-      - working-directory: ./front/Automated.Testing.System/
       - run: npm ci
       - run: npm run build
       # Deploy
-      - working-directory: ./front/Automated.Testing.System/
       - run: rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . /var/www/app
