@@ -17,5 +17,5 @@ jobs:
       - run: npm ci
       - run: npm run build
       # Deploy
-      - run: rsync --rsh="sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no -l root" --archive --compress --delete dist/front 176.126.113.29:/var/www/test
+      - run: rsync --rsh="sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no -l root" --archive --compress --delete dist/front 176.126.113.29:/var/www/
       #- run: rsync -e "ssh -p 22 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . @
