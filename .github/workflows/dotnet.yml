@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
     defaults:
@@ -20,9 +20,14 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
+    # Build
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet publish -r linux-x64
+    # Test
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    # Deploy
+    - run: rsync --rsh="sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no -l ${{secrets.USERNAME}}" --archive --compress --delete /bin/Debug/net6.0/linux-x64/publish ${{secrets.HOST}}:/srv/test/
+
