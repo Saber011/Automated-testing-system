@@ -24,10 +24,10 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet publish -r linux-x64
+      run: dotnet publish -r linux-x64 -o cur
     # Test
     - name: Test
       run: dotnet test --no-build --verbosity normal
     # Deploy
-    - run: rsync --rsh="sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no -l ${{secrets.USERNAME}}" --archive --compress --delete /bin/Debug/net6.0/linux-x64/publish ${{secrets.HOST}}:/srv/test/
+    - run: rsync --rsh="sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no -l ${{secrets.USERNAME}}" --archive --compress --delete /cur ${{secrets.HOST}}:/srv/test/
 
