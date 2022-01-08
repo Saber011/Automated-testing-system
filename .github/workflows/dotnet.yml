@@ -29,5 +29,5 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     # Deploy
-    - run: rsync --rsh="sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no -l ${{secrets.USERNAME}}" --archive --compress --delete /cur ${{secrets.HOST}}:/srv/test/
+    - run: rsync --rsh="sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no -l ${{secrets.USERNAME}}" --archive --compress --delete /cur/ ${{secrets.HOST}}:/srv/test/
 
