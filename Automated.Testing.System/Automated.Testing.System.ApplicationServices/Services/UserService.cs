@@ -53,7 +53,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
         {
             Guard.NotNull(request, nameof(request));
             
-            return await _userRepository.UpdateUserInfoAsync(request.UserId, request.Login, request.Password);
+            return await _userRepository.UpdateUserInfoAsync(request.UserId, request.Login);
         }
     }
 }

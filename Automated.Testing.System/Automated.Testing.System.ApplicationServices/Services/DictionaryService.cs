@@ -1,12 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Automated.Testing.System.ApplicationServices.Interfaces;
 using Automated.Testing.System.Common.Dictionary.Dto;
 using Automated.Testing.System.Common.Dictionary.Dto.Request;
 using Automated.Testing.System.Core.Core;
-using Automated.Testing.System.DataAccess.Abstractions.Entities;
 using Automated.Testing.System.DataAccess.Interfaces;
 
 namespace Automated.Testing.System.ApplicationServices.Services

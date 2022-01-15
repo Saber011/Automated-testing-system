@@ -77,19 +77,5 @@ namespace Automated.Testing.System.Web.Controllers
         {
             return ServiceResponseHelper.ConvertToServiceResponse(await _userService.UpdateUserInfoAsync(request));
         }
-        
-        /// <summary>
-        /// Получить рефреш токены
-        /// </summary>
-        /// <response code = "200" > Успешное выполнение.</response>
-        /// <response code = "401" > Данный запрос требует аутентификации.</response>
-        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
-        [HttpGet]
-        public async Task<ServiceResponse<RefreshToken[]>> GetRefreshTokens(int id)
-        {
-            var user = await _userService.GetUserByIdAsync(id);
-
-            return ServiceResponseHelper.ConvertToServiceResponse(user.RefreshTokens);
-        }
     }
 }

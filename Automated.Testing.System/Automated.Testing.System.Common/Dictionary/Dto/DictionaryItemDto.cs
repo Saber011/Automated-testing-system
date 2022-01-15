@@ -1,5 +1,8 @@
 ﻿namespace Automated.Testing.System.Common.Dictionary.Dto
 {
+    /// <summary>
+    /// Элемент словаря
+    /// </summary>
     public sealed class DictionaryItemDto
     {
         /// <summary>

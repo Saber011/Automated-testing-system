@@ -1,5 +1,8 @@
 ﻿namespace Automated.Testing.System.DataAccess.Abstractions.Entities
 {
+    /// <summary>
+    /// Категория
+    /// </summary>
     public class Category
     {
         /// <summary>
