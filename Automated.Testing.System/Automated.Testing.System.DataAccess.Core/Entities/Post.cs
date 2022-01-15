@@ -1,5 +1,8 @@
 ﻿namespace Automated.Testing.System.DataAccess.Abstractions.Entities
 {
+    /// <summary>
+    /// Должность
+    /// </summary>
     public sealed class Post
     {
         /// <summary>

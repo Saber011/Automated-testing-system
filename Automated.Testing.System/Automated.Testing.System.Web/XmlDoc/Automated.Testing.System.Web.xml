@@ -96,6 +96,54 @@
             Api для работы со справочниками
             </summary>
         </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.TestController.GetTests(System.Nullable{System.Int32})">
+            <summary>
+            Получить все тесты
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.TestController.GetTestTask(System.Int32)">
+            <summary>
+            Получить все задачи теста
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.TestController.CheckTest(System.Int32)">
+            <summary>
+            Проверить решение теста
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.TestController.AddTest(Automated.Testing.System.Common.Test.Dto.Request.CreateTestRequest)">
+            <summary>
+            Добавить тест
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.TestController.RemoveTest(System.Int32)">
+            <summary>
+            Удалить тест
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.TestController.UpdateTest(Automated.Testing.System.Common.Test.Dto.Request.UpdateTestRequest)">
+            <summary>
+            Обновить тест
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
         <member name="T:Automated.Testing.System.Web.Controllers.UserController">
             <summary>
             Api для работы с пользователями
@@ -128,14 +176,6 @@
         <member name="M:Automated.Testing.System.Web.Controllers.UserController.UpdateUserInfo(Automated.Testing.System.Common.User.Dto.Request.UpdaterUserRequest)">
             <summary>
             Обновление информации пользователя.
-            </summary>
-            <response code = "200" > Успешное выполнение.</response>
-            <response code = "401" > Данный запрос требует аутентификации.</response>
-            <response code = "500" > Непредвиденная ошибка сервера.</response>
-        </member>
-        <member name="M:Automated.Testing.System.Web.Controllers.UserController.GetRefreshTokens(System.Int32)">
-            <summary>
-            Получить рефреш токены
             </summary>
             <response code = "200" > Успешное выполнение.</response>
             <response code = "401" > Данный запрос требует аутентификации.</response>

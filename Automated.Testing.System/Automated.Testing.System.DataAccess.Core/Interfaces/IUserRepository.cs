@@ -38,7 +38,7 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         /// <summary>
         /// Изменить данные пользователя
         /// </summary>
-        Task<bool> UpdateUserInfoAsync(int id, string login, string password);
+        Task<bool> UpdateUserInfoAsync(int id, string login);
 
         /// <summary>
         /// Получить токены пользователя.

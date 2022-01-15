@@ -59,9 +59,16 @@ namespace Automated.Testing.System.Web
                     };
                 });
 
+            // core
             services.AddScoped<IPostgresService, PostgresService>();
+            
+            // repository
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IDictionaryRepository, DictionaryRepository>();
+            services.AddScoped<ITestRepository, TestRepository>();
+            
+            // service
+            services.AddScoped<ITestService, TestService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDictionaryService, DictionaryService>();
             services.AddScoped<IAccountService, AccountService>();

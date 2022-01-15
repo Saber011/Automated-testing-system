@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Automated.Testing.System.Core.Core
 {
@@ -37,8 +38,28 @@ namespace Automated.Testing.System.Core.Core
         /// <param name="argumentName">Имя аргумента.</param>
         public static void GreaterThanZero<TArg>(TArg argumentValue, string argumentName) where TArg : struct, IComparable
         {
-            if (argumentValue.CompareTo((object) default (TArg)) != 1)
+            if (argumentValue.CompareTo(default (TArg)) != 1)
                 throw new ArgumentOutOfRangeException(argumentName);
+        }
+        
+        /// <summary>
+        /// Вызывает исключение <see cref="ArgumentNullException"/>, если значение указанного аргумента - `NULL`.
+        /// Если значение аргумента - пустой список, то вызывает исключение <see cref="ArgumentException"/>.
+        /// </summary>
+        /// <typeparam name="T">Тип элементов в списке.</typeparam>
+        /// <param name="argumentValue">Значение аргумента.</param>
+        /// <param name="argumentName">Имя аргумента.</param>
+        public static void NotNullOrEmpty<T>(IReadOnlyList<T> argumentValue, string argumentName)
+        {
+            if (argumentValue == null)
+            {
+                throw new ArgumentNullException(argumentName);
+            }
+
+            if (argumentValue.Count == 0)
+            {
+                throw new ArgumentException(@"Список не может быть пустым.", argumentName);
+            }
         }
     }
 

@@ -33,7 +33,8 @@ namespace Automated.Testing.System.DataAccess.Postgres.Repositories
 SELECT user_id AS {nameof(User.Id)},
        login AS {nameof(User.Login)},
        password AS {nameof(User.Password)}
-  FROM core.user";
+  FROM core.user
+ WHERE is_deleted is null";
             
             return await _postgresService.Execute(query, async connection
                 => (await connection.QueryAsync<User>(query)).ToArray());
@@ -97,8 +98,9 @@ INSERT INTO core.user (login, password)
         /// <inheritdoc />
         public async Task<bool> RemoveUserAsync(int id)
         {
-            var query = @"
-DELETE FROM core.""user""
+            const string query = @"
+UPDATE core.user
+   SET is_deleted = 1
  WHERE user_id = :id";
             return await _postgresService.Execute(query, async connection =>
             {
@@ -112,12 +114,11 @@ DELETE FROM core.""user""
         }
         
         /// <inheritdoc />
-        public async Task<bool> UpdateUserInfoAsync(int id, string login, string password)
+        public async Task<bool> UpdateUserInfoAsync(int id, string login)
         {
             const string query = @"
-UPDATE core.""user"" 
-   SET login = :name,
-       password = :password
+UPDATE core.user
+   SET login = :login
  WHERE user_id = :id";
 
             return await _postgresService.Execute(query, async connection =>
@@ -130,7 +131,6 @@ UPDATE core.""user""
                 
                 command.Parameters.AddWithValue("id", id);
                 command.Parameters.AddWithValue("login", login);
-                command.Parameters.AddWithValue("password", password);
                 _ = await command.ExecuteNonQueryAsync();
 
                 await transaction.CommitAsync();
