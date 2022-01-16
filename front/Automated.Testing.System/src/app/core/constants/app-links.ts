@@ -4,4 +4,6 @@ export const rootLinks = {
   category: 'category',
   dictionary: 'dictionary',
   administration: 'administration',
+  test: 'test',
+  article: 'article'
 };

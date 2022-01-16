@@ -14,6 +14,15 @@ export { DictionaryItemDtoArrayServiceResponse } from './models/dictionary-item-
 export { CreateDictionaryElementRequest } from './models/create-dictionary-element-request';
 export { UpdateDictionaryElementRequest } from './models/update-dictionary-element-request';
 export { DeleteDictionaryElementRequest } from './models/delete-dictionary-element-request';
+export { TestDto } from './models/test-dto';
+export { TestDtoArrayServiceResponse } from './models/test-dto-array-service-response';
+export { ResponseOption } from './models/response-option';
+export { TestTaskDto } from './models/test-task-dto';
+export { TestTaskDtoArrayServiceResponse } from './models/test-task-dto-array-service-response';
+export { TestTask } from './models/test-task';
+export { CreateTestRequest } from './models/create-test-request';
+export { UpdateTestTask } from './models/update-test-task';
+export { UpdateTestRequest } from './models/update-test-request';
 export { UserDto } from './models/user-dto';
 export { UserDtoArrayServiceResponse } from './models/user-dto-array-service-response';
 export { UpdaterUserRequest } from './models/updater-user-request';

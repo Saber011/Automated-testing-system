@@ -6,6 +6,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { AccountService } from './services/account.service';
 import { DictionaryService } from './services/dictionary.service';
+import { TestService } from './services/test.service';
 import { UserService } from './services/user.service';
 
 /**
@@ -18,6 +19,7 @@ import { UserService } from './services/user.service';
   providers: [
     AccountService,
     DictionaryService,
+    TestService,
     UserService,
     ApiConfiguration
   ],

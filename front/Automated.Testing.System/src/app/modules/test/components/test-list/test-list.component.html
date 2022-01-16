@@ -1,0 +1,18 @@
+<mat-form-field appearance="fill">
+  <mat-label>Выберете категорию:</mat-label>
+  <mat-select (selectionChange) = "refreshData()"  [(ngModel)]="selectedValue">
+    <mat-option>None</mat-option>
+    <mat-option *ngFor="let item of category" [value]="item.elementId">
+      {{item.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-card *ngFor="let item of tests">
+  <mat-card-title>{{item.name}}</mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+  <mat-card-actions *ngIf="buttonName">
+    <button (click)="actionButton.emit(item)" mat-button>{{buttonName}}</button>
+  </mat-card-actions>
+<ng-content></ng-content>
+</mat-card>
