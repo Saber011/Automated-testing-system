@@ -1,0 +1,20 @@
+<mat-list *ngFor="let item of tasks">
+  <mat-list-item>{{item.description}}</mat-list-item>
+  <div [ngSwitch]="item.typeId">
+    <ng-template [ngSwitchCase]= "'1'">
+      <mat-form-field appearance="fill">
+        <mat-label>Выберете вариант ответа:</mat-label>
+        <mat-select>
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let answer of item.responseOptions" [value]="answer.id">
+            {{answer.option}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-template>
+    <ng-template [ngSwitchCase]= "'2'"> Go to <b>West</b> Direction </ng-template>
+    <ng-template ngSwitchDefault> No Direction </ng-template>
+  </div>
+  <mat-divider></mat-divider>
+</mat-list>
+<button mat-button>Завершить</button>

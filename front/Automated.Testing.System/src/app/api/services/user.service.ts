@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { BooleanServiceResponse } from '../models/boolean-service-response';
-import { RefreshTokenArrayServiceResponse } from '../models/refresh-token-array-service-response';
 import { UpdaterUserRequest } from '../models/updater-user-request';
 import { UserDto } from '../models/user-dto';
 import { UserDtoArrayServiceResponse } from '../models/user-dto-array-service-response';
@@ -236,60 +235,6 @@ export class UserService extends BaseService {
 
     return this.apiUserUpdateUserInfoPut$Response(params).pipe(
       map((r: StrictHttpResponse<BooleanServiceResponse>) => r.body as BooleanServiceResponse)
-    );
-  }
-
-  /**
-   * Path part for operation apiUserGetRefreshTokensGet
-   */
-  static readonly ApiUserGetRefreshTokensGetPath = '/api/User/GetRefreshTokens';
-
-  /**
-   * Получить рефреш токены.
-   *
-   *
-   *
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiUserGetRefreshTokensGet()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiUserGetRefreshTokensGet$Response(params?: {
-    id?: number;
-  }): Observable<StrictHttpResponse<RefreshTokenArrayServiceResponse>> {
-
-    const rb = new RequestBuilder(this.rootUrl, UserService.ApiUserGetRefreshTokensGetPath, 'get');
-    if (params) {
-      rb.query('id', params.id, {});
-    }
-
-    return this.http.request(rb.build({
-      responseType: 'json',
-      accept: 'application/json'
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<RefreshTokenArrayServiceResponse>;
-      })
-    );
-  }
-
-  /**
-   * Получить рефреш токены.
-   *
-   *
-   *
-   * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiUserGetRefreshTokensGet$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiUserGetRefreshTokensGet(params?: {
-    id?: number;
-  }): Observable<RefreshTokenArrayServiceResponse> {
-
-    return this.apiUserGetRefreshTokensGet$Response(params).pipe(
-      map((r: StrictHttpResponse<RefreshTokenArrayServiceResponse>) => r.body as RefreshTokenArrayServiceResponse)
     );
   }
 

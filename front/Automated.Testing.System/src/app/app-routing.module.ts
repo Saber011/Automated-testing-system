@@ -43,6 +43,22 @@ export const routes: Routes = [
           title: 'admin page',
         },
       },
+      {
+        path: rootLinks.test,
+        loadChildren: () => import('./modules/test/test.module').then(m => m.TestModule),
+        data: {
+          preload: true,
+          title: 'test page',
+        },
+      },
+      {
+        path: rootLinks.article,
+        loadChildren: () => import('./modules/articles/articles.module').then(m => m.ArticlesModule),
+        data: {
+          preload: true,
+          title: 'article page',
+        },
+      },
     ],
    // canActivate: [AuthGuard],
   },
