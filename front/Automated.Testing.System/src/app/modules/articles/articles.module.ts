@@ -9,6 +9,10 @@ import {MatButtonModule} from "@angular/material/button";
 import { ArticlesViewComponent } from './components/articles-view/articles-view.component';
 import { MatExpansionModule} from "@angular/material/expansion";
 import {FateMaterialModule, FateModule} from "fate-editor";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSelectModule} from "@angular/material/select";
+import {MatListModule} from "@angular/material/list";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -24,7 +28,10 @@ import {FateMaterialModule, FateModule} from "fate-editor";
     MatButtonModule,
     MatExpansionModule,
     FateMaterialModule,
-    FateModule
+    FateModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatListModule
   ],
 })
 export class ArticlesModule {}
