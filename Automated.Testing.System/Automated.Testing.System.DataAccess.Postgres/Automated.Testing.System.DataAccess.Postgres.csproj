@@ -4,6 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <AssemblyName>Automated.Testing.System.DataAccess.Postgres</AssemblyName>
         <RootNamespace>Automated.Testing.System.DataAccess.Postgres</RootNamespace>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>

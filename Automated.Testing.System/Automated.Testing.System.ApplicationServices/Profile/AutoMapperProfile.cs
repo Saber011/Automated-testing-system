@@ -20,6 +20,7 @@ namespace Automated.Testing.System.ApplicationServices.Profile
             //Dictionary
             CreateMap<Dictionary, DictionaryDto>();
             CreateMap<DictionaryItem, DictionaryItemDto>();
+            CreateMap<Article, ArticleDto>();
 
             // Test
             CreateMap<TestTask, TestTaskDto>();

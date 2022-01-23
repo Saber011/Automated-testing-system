@@ -33,5 +33,25 @@ namespace Automated.Testing.System.ApplicationServices.Interfaces
         /// Удалить элемент справочника.
         /// </summary>
         Task<bool> DeleteDictionaryItemAsync(DeleteDictionaryElementRequest request);
+        
+        /// <summary>
+        /// Получить статьи
+        /// </summary>
+        Task<ArticleDto[]> GetArticlesAsync(GetArticlesRequest request);
+
+        /// <summary>
+        /// Создать новую статью
+        /// </summary>
+        Task<bool> CreateArticleAsync(CreateArticleRequest request);
+        
+        /// <summary>
+        /// Обновить статью
+        /// </summary>
+        Task<bool> UpdateArticleAsync(UpdateArticleRequest request);
+        
+        /// <summary>
+        /// Удалить статью
+        /// </summary>
+        Task<bool> DeleteArticleAsync(int articleId);
     }
 }

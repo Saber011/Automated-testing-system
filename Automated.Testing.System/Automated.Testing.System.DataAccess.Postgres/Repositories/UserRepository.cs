@@ -57,7 +57,7 @@ SELECT user_id AS {nameof(User.Id)},
         /// <inheritdoc />
         public async Task<User> GetByLoginAsync(string login)
         {
-            var query = $@"
+            const string query = $@"
 SELECT user_id AS {nameof(User.Id)},
        login AS {nameof(User.Login)},
        password AS {nameof(User.Password)}

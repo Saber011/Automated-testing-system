@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Automated.Testing.System.DataAccess.Abstractions.Entities;
 
-namespace Automated.Testing.System.DataAccess.Interfaces
+namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
 {
     public interface IDictionaryRepository
     {
@@ -33,6 +33,26 @@ namespace Automated.Testing.System.DataAccess.Interfaces
         /// <summary>
         /// Получить физическую таблицу.
         /// </summary>
-        Task<string> GetDictionaryTableName(int id);
+        Task<string> GetDictionaryTableNameAsync(int id);
+        
+        /// <summary>
+        /// Получить статьи
+        /// </summary>
+        Task<Article[]> GetArticlesAsync(int[]? categoryIds, string? title, int pageSize, int pageNumber);
+
+        /// <summary>
+        /// Создать новую статью
+        /// </summary>
+        Task<bool> CreateArticleAsync(string title, string text, int[] categoryIds);
+        
+        /// <summary>
+        /// Обновить статью
+        /// </summary>
+        Task<bool> UpdateArticleAsync(int articleId, string title, string text, int[] categoryIds);
+        
+        /// <summary>
+        /// Удалить статью
+        /// </summary>
+        Task<bool> DeleteArticleAsync(int articleId);
     }
 }
