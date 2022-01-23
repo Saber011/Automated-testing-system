@@ -1,4 +1,18 @@
+<form [formGroup]="form" novalidate>
 <button (click)="save()" mat-button>Сохранить</button>
-<mat-form-field>
-  <fate-material [(ngModel)]="someHtml" placeholder="Some text"></fate-material>
+<input matInput placeholder="Заговок" [type]="'text'" formControlName="title" required>
+  <div class="alert alert-danger"
+       *ngIf="form.controls['title'].invalid && form.controls['title'].touched">
+    Не указан заголовок!
+  </div>
+  <form [formGroup]="form" novalidate>
+    <mat-form-field appearance="fill">
+      <mat-label>Категории</mat-label>
+      <mat-select formControlName="category" multiple>
+        <mat-option *ngFor="let item of category" [value]="item.elementId">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  <mat-form-field>
+  <fate-material formControlName="someHtml" placeholder="Some text"></fate-material>
 </mat-form-field>
+</form>

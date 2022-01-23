@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Automated.Testing.System.ApplicationServices.Interfaces;
 using Automated.Testing.System.Common.Dictionary.Dto;
 using Automated.Testing.System.Common.Dictionary.Dto.Request;
 using Automated.Testing.System.Core.Core;
-using Automated.Testing.System.DataAccess.Interfaces;
+using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
+using NotImplementedException = System.NotImplementedException;
 
 namespace Automated.Testing.System.ApplicationServices.Services
 {
@@ -41,7 +44,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
             Guard.NotNullOrWhiteSpace(request.Name, nameof(request.Name));
             Guard.GreaterThanZero(request.DictionaryId, nameof(request.DictionaryId));
 
-            var dictionaryTable = await _dictionaryRepository.GetDictionaryTableName(request.DictionaryId);
+            var dictionaryTable = await _dictionaryRepository.GetDictionaryTableNameAsync(request.DictionaryId);
 
             if (!string.IsNullOrWhiteSpace(dictionaryTable))
             {
@@ -59,7 +62,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
             Guard.GreaterThanZero(request.DictionaryId, nameof(request.DictionaryId));
             Guard.GreaterThanZero(request.ElementId, nameof(request.ElementId));
 
-            var dictionaryTable = await _dictionaryRepository.GetDictionaryTableName(request.DictionaryId);
+            var dictionaryTable = await _dictionaryRepository.GetDictionaryTableNameAsync(request.DictionaryId);
 
             if (!string.IsNullOrWhiteSpace(dictionaryTable))
             {
@@ -76,7 +79,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
             Guard.GreaterThanZero(request.ElementId, nameof(request.ElementId));
             Guard.GreaterThanZero(request.DictionaryId, nameof(request.DictionaryId));
 
-            var dictionaryTable = await _dictionaryRepository.GetDictionaryTableName(request.DictionaryId);
+            var dictionaryTable = await _dictionaryRepository.GetDictionaryTableNameAsync(request.DictionaryId);
 
             if (!string.IsNullOrWhiteSpace(dictionaryTable))
             {
@@ -84,6 +87,50 @@ namespace Automated.Testing.System.ApplicationServices.Services
             }
 
             return false;
+        }
+
+        /// <inheritdoc />
+        public async Task<ArticleDto[]> GetArticlesAsync(GetArticlesRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            var articles = await _dictionaryRepository.GetArticlesAsync(request.CategoryIds, request.Title, request.PageSize,
+                request.PageNumber);
+
+            var result = new List<ArticleDto>();
+            foreach (var article in articles)
+            {
+                if(!result.Any(item => item.ArticleId == article.ArticleId))
+                    result.Add(new ArticleDto
+                    {
+                        ArticleId = article.ArticleId,
+                        Text = article.Text,
+                        Title = article.Title,
+                        CategoryIds = articles.Where(x => x.ArticleId == article.ArticleId).Select(x => x.CategoryId).ToArray(),
+                    });
+            }
+
+            return result.ToArray();
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> CreateArticleAsync(CreateArticleRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _dictionaryRepository.CreateArticleAsync(request.Title, request.Text, request.CategoryIds);
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> UpdateArticleAsync(UpdateArticleRequest request)
+        {
+            Guard.NotNull(request, nameof(request));
+            return await _dictionaryRepository.UpdateArticleAsync(request.ArticleId ,request.Title, request.Text, request.CategoryIds);
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> DeleteArticleAsync(int articleId)
+        {
+            Guard.GreaterThanZero(articleId, nameof(articleId));
+            return await _dictionaryRepository.DeleteArticleAsync(articleId);
         }
     }
 }

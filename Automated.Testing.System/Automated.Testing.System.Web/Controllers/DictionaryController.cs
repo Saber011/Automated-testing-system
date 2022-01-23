@@ -84,5 +84,53 @@ namespace Automated.Testing.System.Web.Controllers
         {
             return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.DeleteDictionaryItemAsync(request));
         }
+        
+        /// <summary>
+        /// Получить статьи
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
+        [HttpGet]
+        public async Task<ServiceResponse<ArticleDto[]>> GetArticles([FromQuery]GetArticlesRequest request)
+        {
+            return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.GetArticlesAsync(request));
+        }
+        
+        /// <summary>
+        /// Cоздать статью
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
+        [HttpPost]
+        public async Task<ServiceResponse<bool>> CreateArticle(CreateArticleRequest request)
+        {
+            return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.CreateArticleAsync(request));
+        }
+        
+        /// <summary>
+        /// Обновить статью
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
+        [HttpPut]
+        public async Task<ServiceResponse<bool>> UpdateArticle(UpdateArticleRequest request)
+        {
+            return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.UpdateArticleAsync(request));
+        }
+        
+        /// <summary>
+        /// Удалить статью
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
+        [HttpDelete]
+        public async Task<ServiceResponse<bool>> DeleteArticle(int articleId)
+        {
+            return ServiceResponseHelper.ConvertToServiceResponse(await  _dictionaryService.DeleteArticleAsync(articleId));
+        }
     }
 }

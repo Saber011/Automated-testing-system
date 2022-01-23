@@ -16,6 +16,8 @@ import { DialogBoxComponent } from './components/dialog-box/dialog-box.component
 import {FateMaterialModule, FateModule} from "fate-editor";
 import {FateMaterialComponent} from "fate-editor/app/fate-material/fate-material.component";
 import { ArticleComponent } from './components/article/article.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [DictionaryComponent, DictionaryDialog, DialogBoxComponent, ArticleComponent],
@@ -34,7 +36,9 @@ import { ArticleComponent } from './components/article/article.component';
     MatSortModule,
     MatDialogModule,
     FateMaterialModule,
-    FateModule
+    FateModule,
+    MatSelectModule,
+    MatListModule
   ],
 })
 export class DictionaryModule {}

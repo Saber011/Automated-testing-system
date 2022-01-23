@@ -2,5 +2,5 @@
 /* eslint-disable */
 export interface DictionaryItemDto {
   elementId?: number;
-  name: string;
+  name?: null | string;
 }

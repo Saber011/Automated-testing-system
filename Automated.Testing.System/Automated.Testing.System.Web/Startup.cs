@@ -6,7 +6,6 @@ using Automated.Testing.System.ApplicationServices.Services;
 using Automated.Testing.System.Core;
 using Automated.Testing.System.Core.Core;
 using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
-using Automated.Testing.System.DataAccess.Interfaces;
 using Automated.Testing.System.DataAccess.Postgres.Repositories;
 using Automated.Testing.System.DatabaseProvider.Postgres;
 using Automated.Testing.System.Utils.Modules;

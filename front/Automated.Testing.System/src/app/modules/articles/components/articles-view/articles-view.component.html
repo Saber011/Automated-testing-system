@@ -1,13 +1,39 @@
-<mat-accordion *ngFor="let item of articlesData">
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{item.elementId}}
-      </mat-panel-title>
-      <mat-panel-description>
-        This is a summary of the content
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <fate-material [value]="item.name" placeholder="Some text"></fate-material>
-  </mat-expansion-panel>
-</mat-accordion>
+<header role="banner">
+  <form [formGroup]="form" novalidate>
+    <mat-form-field appearance="fill">
+      <mat-label>Категории</mat-label>
+      <mat-select formControlName="category" multiple>
+        <mat-option *ngFor="let item of category" [value]="item.elementId">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <input matInput placeholder="Поиск:" [type]="'text'" formControlName="title">
+  </form>
+</header>
+<main role="main">
+  <mat-accordion *ngFor="let item of articlesData">
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{item.title}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <fate-material [value]="item!.text" placeholder="Some text"></fate-material>
+    </mat-expansion-panel>
+  </mat-accordion>
+</main>
+<footer role="contentinfo">
+  <mat-paginator
+    [length]="pageTotal"
+    [pageIndex]="pageIndex"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="pageEvent = getServerData($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</footer>
+
+
+

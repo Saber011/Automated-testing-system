@@ -14,6 +14,10 @@ export { DictionaryItemDtoArrayServiceResponse } from './models/dictionary-item-
 export { CreateDictionaryElementRequest } from './models/create-dictionary-element-request';
 export { UpdateDictionaryElementRequest } from './models/update-dictionary-element-request';
 export { DeleteDictionaryElementRequest } from './models/delete-dictionary-element-request';
+export { ArticleDto } from './models/article-dto';
+export { ArticleDtoArrayServiceResponse } from './models/article-dto-array-service-response';
+export { CreateArticleRequest } from './models/create-article-request';
+export { UpdateArticleRequest } from './models/update-article-request';
 export { TestDto } from './models/test-dto';
 export { TestDtoArrayServiceResponse } from './models/test-dto-array-service-response';
 export { ResponseOption } from './models/response-option';

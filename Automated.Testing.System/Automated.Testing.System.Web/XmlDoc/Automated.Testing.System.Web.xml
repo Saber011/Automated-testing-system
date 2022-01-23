@@ -91,6 +91,38 @@
             <response code = "401" > Данный запрос требует аутентификации.</response>
             <response code = "500" > Непредвиденная ошибка сервера.</response>
         </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.DictionaryController.GetArticles(Automated.Testing.System.Common.Dictionary.Dto.Request.GetArticlesRequest)">
+            <summary>
+            Получить статьи
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.DictionaryController.CreateArticle(Automated.Testing.System.Common.Dictionary.Dto.Request.CreateArticleRequest)">
+            <summary>
+            Cоздать статью
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.DictionaryController.UpdateArticle(Automated.Testing.System.Common.Dictionary.Dto.Request.UpdateArticleRequest)">
+            <summary>
+            Обновить статью
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.DictionaryController.DeleteArticle(System.Int32)">
+            <summary>
+            Удалить статью
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
         <member name="T:Automated.Testing.System.Web.Controllers.TestController">
             <summary>
             Api для работы со справочниками
