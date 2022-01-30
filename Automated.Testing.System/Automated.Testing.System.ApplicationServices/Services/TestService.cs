@@ -43,9 +43,9 @@ namespace Automated.Testing.System.ApplicationServices.Services
         }
 
         /// <inheritdoc />
-        public async Task<TestDto[]> GetTestsAsync(int? categoryId)
+        public async Task<TestDto[]> GetTestsAsync(int[] categoryIds)
         {
-            return _mapper.Map<TestDto[]>(await _testRepository.GetTestsAsync(categoryId));
+            return _mapper.Map<TestDto[]>(await _testRepository.GetTestsAsync(categoryIds));
         }
 
         public Task<TestDto[]> GetTestAnswerAsync(int testId)
@@ -63,7 +63,8 @@ namespace Automated.Testing.System.ApplicationServices.Services
         {
             Guard.NotNull(request, nameof(request));
 
-            var testId = await _testRepository.CreateTestAsync(request.TestName, request.CategoryId);
+            var testId = await _testRepository.CreateTestAsync(request.TestName, request.UserId);
+            await _testRepository.CreateTestCategoryAsync(testId, request.CategoryIds);
             foreach (var task in request.Task)
             {
                 var taskId = await _testRepository.CreateTestTaskAsync(task.Description, testId, task.TypeId);

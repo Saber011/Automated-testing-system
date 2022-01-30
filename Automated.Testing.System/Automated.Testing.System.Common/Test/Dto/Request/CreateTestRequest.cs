@@ -6,6 +6,11 @@
     public sealed class CreateTestRequest
     {
         /// <summary>
+        /// Создатель теста
+        /// </summary>
+        public int UserId { get; set; }
+        
+        /// <summary>
         /// Наименование теста
         /// </summary>
         public string TestName { get; set; }
@@ -13,7 +18,7 @@
         /// <summary>
         /// Категория теста
         /// </summary>
-        public int CategoryId { get; set; }
+        public int[] CategoryIds { get; set; }
         
         /// <summary>
         /// Задачи теста

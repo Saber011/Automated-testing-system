@@ -9,11 +9,9 @@ import {ApiModule} from "./api/api.module";
 import {AppShellComponent} from "./app-shell/app-shell.component";
 import {CoreModule} from "./core/core.module";
 import {RouterModule} from "@angular/router";
-import {LoginModule} from "./modules/login/login.module";
 import { AppPreloaderContainerComponent } from './component/app-preloader-container/app-preloader-container.component';
 import {SelectivePreloadingStrategy} from "./core/services/selective-preload-strategy";
 import { NotFoundComponent } from './component/not-found/not-found.component';
-import {MaterialModule} from "./material.module";
 
 @NgModule({
   declarations: [

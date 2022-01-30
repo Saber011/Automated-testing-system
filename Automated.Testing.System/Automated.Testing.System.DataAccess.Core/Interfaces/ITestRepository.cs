@@ -22,7 +22,7 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         /// <summary>
         /// Получить все тесты.
         /// </summary>
-        Task<Test[]> GetTestsAsync(int? categoryId);
+        Task<Test[]> GetTestsAsync(int[] categoryIds);
 
         /// <summary>
         /// Проверить результат теста.
@@ -32,7 +32,12 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         /// <summary>
         /// Создать тест
         /// </summary>
-        Task<int> CreateTestAsync(string name, int categoryId);
+        Task<int> CreateTestAsync(string name, int userId);
+        
+        /// <summary>
+        /// Добавить связь теста и категории
+        /// </summary>
+        Task<bool> CreateTestCategoryAsync(int testId, int[] categoryIds);
 
         /// <summary>
         /// Добавить задачи для теста.

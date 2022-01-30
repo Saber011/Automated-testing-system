@@ -4,7 +4,9 @@
   position: absolute;
   top: 100%;
 }
-#navbar li:hover ul { display: block; }
+#navbar li:hover ul {
+  display: block;
+}
 #navbar, #navbar ul{
   margin: 0;
   padding: 0;

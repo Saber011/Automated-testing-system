@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Automated.Testing.System.Core.Core;
 using Automated.Testing.System.DataAccess.Abstractions.Entities;
@@ -75,19 +76,20 @@ where test_task_id in ({string.Join(",", taskIds)})";
         }
 
         /// <inheritdoc />
-        public async Task<Test[]> GetTestsAsync(int? categoryId)
+        public async Task<Test[]> GetTestsAsync(int[] categoryIds)
         {
             var filter = string.Empty;
-            if (categoryId.HasValue)
+            if (categoryIds.Length > 0)
             {
-                filter = $"WHERE category_id = {categoryId}";
+                filter = $"WHERE category_id in ({string.Join(",", categoryIds)})";
             }
             
             var query = $@"
-select test_id AS {nameof(Test.TestId)},
+select distinct t.test_id AS {nameof(Test.TestId)},
        name AS {nameof(Test.Name)},
-       category_id AS {nameof(Test.CategoryId)}
-from core.test
+       0 AS {nameof(Test.CategoryId)}
+from core.test t
+inner join core.ref_test_category rtc on t.test_id = rtc.test_id
 {filter}";
             
             return await _postgresService.Execute(query, async connection
@@ -101,14 +103,13 @@ from core.test
         }
 
         /// <inheritdoc />
-        public async Task<int> CreateTestAsync(string name, int categoryId)
+        public async Task<int> CreateTestAsync(string name, int userId)
         {
-            Guard.GreaterThanZero(categoryId, nameof(categoryId));
             Guard.NotNullOrWhiteSpace(name, nameof(name));
             
             const string query = $@"
-INSERT INTO core.test (test_id, name, category_id)
-VALUES (DEFAULT, :test, :category)
+INSERT INTO core.test (test_id, name, user_id)
+VALUES (DEFAULT, :test, :userId)
 RETURNING test_id;";
 
             return await _postgresService.Execute(query, async connection =>
@@ -120,12 +121,40 @@ RETURNING test_id;";
                 command.CommandType = CommandType.Text;
                 
                 command.Parameters.AddWithValue("test", name);
-                command.Parameters.AddWithValue("category", categoryId);
+                command.Parameters.AddWithValue("userId", userId);
                 var testId = await command.ExecuteScalarAsync();
 
                 await transaction.CommitAsync();
 
                 return (int)testId;
+            });
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> CreateTestCategoryAsync(int testId, int[] categoryIds)
+        {
+            StringBuilder categoryInsertQuery = new();
+            if (categoryIds.Length > 0)
+            {
+                foreach (var categoryId in categoryIds)
+                {
+                    categoryInsertQuery.Append($"INSERT INTO core.ref_test_category (test_id, category_id) VALUES ({testId}, {categoryId});");
+                }
+            }
+            
+            return await _postgresService.Execute(categoryInsertQuery.ToString(), async connection =>
+            {
+                await using var transaction = await connection.BeginTransactionAsync();
+                await using var command = connection.CreateCommand();
+                command.Transaction = transaction;
+                command.CommandText = categoryInsertQuery.ToString();
+                command.CommandType = CommandType.Text;
+                
+                await command.ExecuteNonQueryAsync();
+
+                await transaction.CommitAsync();
+
+                return true;
             });
         }
 
@@ -237,6 +266,8 @@ DELETE FROM core.test_task_answer
  WHERE test_task_id in ({string.Join(",", testTaskIds)});
 DELETE FROM core.test_task
  WHERE test_task_id in ({string.Join(",", testTaskIds)});
+DELETE FROM core.ref_test_category
+ WHERE test_id in ({string.Join(",", testTaskIds)});
 DELETE FROM core.test
  WHERE test_id = :testId;";
             return await _postgresService.Execute(query, async connection =>

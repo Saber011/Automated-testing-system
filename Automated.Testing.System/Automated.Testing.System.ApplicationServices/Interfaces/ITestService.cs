@@ -17,7 +17,7 @@ namespace Automated.Testing.System.ApplicationServices.Interfaces
         /// <summary>
         /// Получить все тесты.
         /// </summary>
-        Task<TestDto[]> GetTestsAsync(int? categoryId);
+        Task<TestDto[]> GetTestsAsync(int[] categoryIds);
         
         /// <summary>
         /// Получить ответы для теста.

@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <DocumentationFile>XmlDoc\Automated.Testing.System.Web.xml</DocumentationFile>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>

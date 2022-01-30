@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -93,8 +94,15 @@ namespace Automated.Testing.System.ApplicationServices.Services
         public async Task<ArticleDto[]> GetArticlesAsync(GetArticlesRequest request)
         {
             Guard.NotNull(request, nameof(request));
-            var articles = await _dictionaryRepository.GetArticlesAsync(request.CategoryIds, request.Title, request.PageSize,
-                request.PageNumber);
+            var articles =
+                (await _dictionaryRepository.GetArticlesAsync(request.Title, request.PageSize, request.PageNumber));
+
+            if (request.CategoryIds is not null && request.CategoryIds.Length > 0)
+            {
+                articles = articles.Where(art => request.CategoryIds.Contains(art.CategoryId)).ToArray();
+            }
+            
+            var total = await _dictionaryRepository.GetTotalArticlesAsync();
 
             var result = new List<ArticleDto>();
             foreach (var article in articles)
@@ -106,6 +114,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
                         Text = article.Text,
                         Title = article.Title,
                         CategoryIds = articles.Where(x => x.ArticleId == article.ArticleId).Select(x => x.CategoryId).ToArray(),
+                        Total = total,
                     });
             }
 

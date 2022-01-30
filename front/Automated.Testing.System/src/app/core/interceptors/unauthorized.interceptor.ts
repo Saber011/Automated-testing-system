@@ -19,6 +19,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    console.log('get')
     return next.handle(request).pipe(
       catchError((err) => {
         if (err.status === 401) {

@@ -1,22 +1,17 @@
-<!--<header class="header">-->
-
-<!--  <ng-template #titleTemplate>-->
-<!--    <div class="header__container">-->
-<!--      <div class="header__title">-->
-<!--        <div class="main_title">титле</div>-->
-<!--        <div class="sub_title">суб титле</div>-->
-<!--      </div>-->
-<!--      <div class="separator"></div>-->
-<!--      <div class="breadcrumbs__container">-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </ng-template>-->
-<!--</header>-->
-<!--<nav>-->
-<!--  <ul id="navbar">-->
-<!--    <li><a [routerLink]="'login'"></a>-->
-<!--  </ul>-->
-<!--</nav>-->
+<ng-container *ngIf="userInfo">
+<header class="header">
+    <div class="header__container">
+      <div class="separator"></div>
+      <div class="breadcrumbs__container">
+      </div>
+    </div>
+</header>
+<nav>
+  <ul id="navbar">
+    <li> <a  [routerLink]="['/home']">Главное меню</a> </li>
+  </ul>
+</nav>
+  </ng-container>
 <main>
   <router-outlet></router-outlet>
 </main>

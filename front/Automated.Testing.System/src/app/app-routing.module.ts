@@ -4,6 +4,7 @@ import {AppShellComponent} from './app-shell/app-shell.component';
 import {rootLinks} from './core/constants/app-links';
 import {SelectivePreloadingStrategy} from "./core/services/selective-preload-strategy";
 import {NotFoundComponent} from "./component/not-found/not-found.component";
+import {AuthGuard} from "./core";
 
 export const routes: Routes = [
   {
@@ -26,6 +27,7 @@ export const routes: Routes = [
           preload: true,
           title: 'home page',
         },
+        canActivate: [AuthGuard],
       },
       {
         path: rootLinks.dictionary,
@@ -34,6 +36,7 @@ export const routes: Routes = [
           preload: true,
           title: 'dictionary page',
         },
+        canActivate: [AuthGuard],
       },
       {
         path: rootLinks.administration,
@@ -42,6 +45,7 @@ export const routes: Routes = [
           preload: true,
           title: 'admin page',
         },
+        canActivate: [AuthGuard],
       },
       {
         path: rootLinks.test,
@@ -50,6 +54,7 @@ export const routes: Routes = [
           preload: true,
           title: 'test page',
         },
+        canActivate: [AuthGuard],
       },
       {
         path: rootLinks.article,
@@ -58,16 +63,11 @@ export const routes: Routes = [
           preload: true,
           title: 'article page',
         },
+        canActivate: [AuthGuard],
       },
     ],
-   // canActivate: [AuthGuard],
+
   },
-  // {
-  //   path: rootLinks.login,
-  //   loadChildren: () => import('./modules/authentication/authentication.module').then(m => m.AuthenticationModule),
-  //   data: { preload: false, title: 'Login page' },
-  //   canActivate: [LoginPageGuard],
-  // },
   {
     path: rootLinks.login,
     loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),

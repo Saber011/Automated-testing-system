@@ -14,6 +14,10 @@ import { MatListModule} from "@angular/material/list";
 import { CreateTestComponent } from './components/create-test/create-test.component';
 import { AddTestDialogComponent } from './components/dialog/add-test-dialog/add-test-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatRippleModule} from "@angular/material/core";
+import {MatIconModule} from "@angular/material/icon";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -29,7 +33,10 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatButtonModule,
     MatSelectModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatRippleModule,
+    MatIconModule,
+    MatCheckboxModule
   ],
 })
 export class TestModule {}

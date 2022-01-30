@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {AddTestDialogComponent} from "../dialog/add-test-dialog/add-test-dialog.component";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-create-test',
@@ -9,14 +10,17 @@ import {AddTestDialogComponent} from "../dialog/add-test-dialog/add-test-dialog.
 })
 export class CreateTestComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) {
+
+  }
 
   ngOnInit(): void {
   }
 
   addTest() {
     const dialogRef = this.dialog.open(AddTestDialogComponent, {
-      width: '250px',
+      height: '400px',
+      width: '350px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

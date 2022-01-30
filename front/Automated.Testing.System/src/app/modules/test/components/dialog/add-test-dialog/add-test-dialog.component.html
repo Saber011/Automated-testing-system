@@ -2,12 +2,64 @@
   <strong>Добавление
   </strong></h1>
 <div mat-dialog-content>
-  <mat-form-field>
-    <input placeholder="Name" matInput [(ngModel)]= "test.testName" >
-  </mat-form-field>
-  <mat-form-field>
-    <input placeholder="Name" matInput [(ngModel)]= "test.categoryId" >
-  </mat-form-field>
+  <form [formGroup]="myForm" novalidate (ngSubmit)="submit()">
+    <input matInput formControlName="testName" placeholder="Название теста" >
+    <ng-container>
+      <mat-form-field appearance="fill">
+        <mat-label>Выберете категорию:</mat-label>
+        <mat-select formControlName="testCategory" multiple>
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let item of category" [value]="item.elementId">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+    <div  formArrayName="tasks">
+      <div  *ngFor="let item of getFormsControls()['controls']; let i = index">
+        <mat-icon (click)="removeTask(i)" svgIcon="remove" aria-hidden="false"></mat-icon>
+        <label mat-dialog-title>Задача № {{i + 1 }}</label>
+        <div [formGroupName]="i">
+        <input matInput placeholder="Текст задачи" formControlName="description" />
+          <mat-form-field appearance="fill">
+            <mat-label>Выберете тип ответа для теста:</mat-label>
+          <mat-select formControlName="typeId">
+            <mat-option>None</mat-option>
+            <mat-option [value] = 1>
+              Список
+            </mat-option>
+            <mat-option [value] = 2>
+              Текст
+            </mat-option>
+            <mat-option [value] = 3>
+              Логическая отметка
+            </mat-option>
+          </mat-select>
+          </mat-form-field>
+          <div formArrayName="responseOptions">
+            <div  *ngFor="let item of getFormsOptionsControls(i)['controls']; let optionIndex = index">
+        <input matInput placeholder="Вариант ответа" formControlName="{{optionIndex}}" />
+              <mat-icon (click)="removeResponseOptions(i ,optionIndex)" svgIcon="remove" aria-hidden="false"></mat-icon>
+          </div>
+            <mat-icon (click)="addResponseOptions(i)" svgIcon="add" aria-hidden="false"></mat-icon>
+          </div>
+          <div formArrayName="answers">
+            <div  *ngFor="let item of getFormsAnswersControls(i)['controls']; let answerIndex = index">
+        <input matInput placeholder="Ответ" formControlName="{{answerIndex}}" />
+              <mat-icon (click)="removeAnswers(i ,answerIndex )" svgIcon="remove" aria-hidden="false"></mat-icon>
+          </div>
+            <mat-icon (click)="addAnswers(i)" svgIcon="add" aria-hidden="false"></mat-icon>
+          </div>
+          </div>
+      </div>
+    </div>
+    <button class="btn btn-default" (click)="addTask()">
+      Добавить задачу теста
+    </button>
+    <button class="btn btn-default">
+      Сохранить
+    </button>
+  </form>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
