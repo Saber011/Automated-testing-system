@@ -70,9 +70,9 @@ namespace Automated.Testing.System.Web.Controllers
         /// <response code = "200" > Успешное выполнение.</response>
         /// <response code = "500" > Непредвиденная ошибка сервера.</response>
         [HttpPost]
-        public async Task<ServiceResponse<bool>> RevokeToken([FromBody] RevokeTokenRequest model)
+        public async Task<ServiceResponse<bool>> RevokeToken([FromBody] RevokeTokenRequest? model)
         {
-            var token = model.Token ?? Request.Cookies["refreshToken"];
+            var token = model?.Token ?? Request.Cookies["refreshToken"];
 
             if (string.IsNullOrEmpty(token))
                 throw new  ValidationException("Token is required");

@@ -55,11 +55,8 @@ SELECT table_name
         }
 
         /// <inheritdoc />
-        public async Task<Article[]> GetArticlesAsync(int[]? categoryIds, string? title, int pageSize, int pageNumber)
+        public async Task<Article[]> GetArticlesAsync(string? title, int pageSize, int pageNumber)
         {
-            var categoryFilter = categoryIds is not null && categoryIds.Length > 0
-                ? $"AND rtc.category_id in ({string.Join(",", categoryIds)})"
-                : string.Empty;
             var titleFilter = !string.IsNullOrWhiteSpace(title)
                 ? $"AND t.title like '%{title}%'"
                 : string.Empty;
@@ -83,12 +80,22 @@ SELECT article_id as {nameof(Article.ArticleId)},
           FROM core.article t
      INNER JOIN core.ref_article_category rtc on t.article_id = rtc.article_id
          WHERE 1 = 1
-           {categoryFilter}
            {titleFilter}) as dta
 WHERE row_number BETWEEN :startRow and :endRow";
             
             return await _postgresService.Execute(query, async connection
                 => (await connection.QueryAsync<Article>(query, new { startRow, endRow })).ToArray());
+        }
+
+        /// <inheritdoc />
+        public async Task<int> GetTotalArticlesAsync()
+        {
+            const string query = @"
+SELECT count(1)
+FROM core.article";
+
+            return await _postgresService.Execute(query, async connection
+                => await connection.QueryFirstOrDefaultAsync<int>(query));
         }
 
         /// <inheritdoc />

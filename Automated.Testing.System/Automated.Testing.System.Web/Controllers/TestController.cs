@@ -30,10 +30,10 @@ namespace Automated.Testing.System.Web.Controllers
         /// <response code = "200" > Успешное выполнение.</response>
         /// <response code = "401" > Данный запрос требует аутентификации.</response>
         /// <response code = "500" > Непредвиденная ошибка сервера.</response>
-        [HttpGet]
-        public async Task<ServiceResponse<TestDto[]>> GetTests(int? category)
+        [HttpPost]
+        public async Task<ServiceResponse<TestDto[]>> GetTests(int[] categoryIds)
         {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _testService.GetTestsAsync(category));
+            return ServiceResponseHelper.ConvertToServiceResponse(await  _testService.GetTestsAsync(categoryIds));
         }
         
         /// <summary>

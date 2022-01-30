@@ -20,25 +20,27 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatListModule} from "@angular/material/list";
 
 @NgModule({
-  declarations: [DictionaryComponent, DictionaryDialog, DialogBoxComponent, ArticleComponent],
-  imports: [
-    CommonModule,
-    DictionaryRoutingModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatCardModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatSortModule,
-    MatDialogModule,
-    FateMaterialModule,
-    FateModule,
-    MatSelectModule,
-    MatListModule
-  ],
+    declarations: [DictionaryComponent, DictionaryDialog, DialogBoxComponent, ArticleComponent],
+    imports: [
+        CommonModule,
+        DictionaryRoutingModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatCardModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatTableModule,
+        MatFormFieldModule,
+        MatSortModule,
+        MatDialogModule,
+        FateMaterialModule,
+        FateModule,
+        MatSelectModule,
+        MatListModule
+    ],
+    exports: [
+    ]
 })
 export class DictionaryModule {}

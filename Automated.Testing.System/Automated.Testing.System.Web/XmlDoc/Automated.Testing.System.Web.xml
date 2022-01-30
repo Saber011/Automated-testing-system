@@ -128,7 +128,7 @@
             Api для работы со справочниками
             </summary>
         </member>
-        <member name="M:Automated.Testing.System.Web.Controllers.TestController.GetTests(System.Nullable{System.Int32})">
+        <member name="M:Automated.Testing.System.Web.Controllers.TestController.GetTests(System.Int32[])">
             <summary>
             Получить все тесты
             </summary>

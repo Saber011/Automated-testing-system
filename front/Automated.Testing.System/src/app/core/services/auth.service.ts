@@ -1,30 +1,25 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import {BehaviorSubject, Observable, of, Subject, Subscription} from 'rxjs';
 import { map, tap, delay, finalize } from 'rxjs/operators';
 import {UserDto} from "../../api/models/user-dto";
-import { AuthenticateInfoServiceResponse } from "../../api/models/authenticate-info-service-response";
-import { UserService} from "../../api/services/user.service";
-import {StrictHttpResponse} from "../../api/strict-http-response";
 import {AuthenticateInfo} from "../../api/models/authenticate-info";
 import {AccountService} from "../../api/services/account.service";
+import {removeCookie} from "typescript-cookie";
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnDestroy {
+export class AuthService implements OnDestroy{
   private timer: Subscription | undefined;
-  // @ts-ignore
-  private _user = new BehaviorSubject<UserDto>(null);
-  user$: Observable<UserDto> = this._user.asObservable();
+  private _user = new BehaviorSubject<UserDto | null >(null);
+  user$: Observable<UserDto | null> = this._user.asObservable();
 
   private storageEventListener(event: StorageEvent) {
     if (event.storageArea === localStorage) {
       if (event.key === 'logout-event') {
         this.stopTokenTimer();
-        // @ts-ignore
         this._user.next(null);
       }
       if (event.key === 'login-event') {
@@ -68,22 +63,19 @@ export class AuthService implements OnDestroy {
   }
 
   logout() {
-    // this.http
-    //   .post<unknown>(`${this.apiUrl}/logout`, {})
-    //   .pipe(
-    //     finalize(() => {
-    //       this.clearLocalStorage();
-    //       this._user.next(null);
-    //       this.stopTokenTimer();
-    //       this.router.navigate(['login']);
-    //     })
-    //   )
-    //   .subscribe();
+    const refreshToken = localStorage.getItem('refreshToken');
+    this.accountService.apiAccountRevokeTokenPost({body: { token: refreshToken}})
+      .subscribe(response => {
+        this.clearLocalStorage();
+        this._user.next(null);
+        this.stopTokenTimer();
+        this.router.navigate(['login']);
+      })
   }
 
   refreshToken() : Observable<any> {
     const refreshToken = localStorage.getItem('refresh_token');
-    if (!refreshToken) {
+    if (refreshToken) {
       this.clearLocalStorage();
       return of(null);
     }
@@ -138,4 +130,5 @@ export class AuthService implements OnDestroy {
   private stopTokenTimer() {
     this.timer?.unsubscribe();
   }
+
 }

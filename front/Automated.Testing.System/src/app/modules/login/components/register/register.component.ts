@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "../../../../core";
-import {UserService} from "../../../../api/services/user.service";
 import {AccountService} from "../../../../api/services/account.service";
 
 @Component({
@@ -31,8 +28,7 @@ export class RegisterComponent implements OnInit {
   registration() {
     const username = this.form.get('username')?.value;
     const password = this.form.get('password')?.value;
-
-    this.accountService.apiAccountRegisterUserPost({body: {password: password, login: username}})
+    this.accountService.apiAccountRegisterUserPost({ body: { password: password, login: username}})
       .subscribe(response => {
         if(response.content)
         {
