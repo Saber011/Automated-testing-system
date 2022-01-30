@@ -12,8 +12,13 @@
         </mat-select>
       </mat-form-field>
     </ng-template>
-    <ng-template [ngSwitchCase]= "'2'"> Go to <b>West</b> Direction </ng-template>
-    <ng-template ngSwitchDefault> No Direction </ng-template>
+    <ng-template [ngSwitchCase]= "'2'">
+      <input matInput placeholder="Введите ответ">
+    </ng-template>
+    <ng-template [ngSwitchCase]= "'3'">
+      <mat-checkbox class="example-margin" >Checked</mat-checkbox>
+    </ng-template>
+    <ng-template ngSwitchDefault>Тип не распознан </ng-template>
   </div>
   <mat-divider></mat-divider>
 </mat-list>

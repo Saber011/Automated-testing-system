@@ -27,9 +27,9 @@ export class TestService extends BaseService {
   }
 
   /**
-   * Path part for operation apiTestGetTestsGet
+   * Path part for operation apiTestGetTestsPost
    */
-  static readonly ApiTestGetTestsGetPath = '/api/Test/GetTests';
+  static readonly ApiTestGetTestsPostPath = '/api/Test/GetTests';
 
   /**
    * Получить все тесты.
@@ -37,17 +37,17 @@ export class TestService extends BaseService {
    *
    *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiTestGetTestsGet()` instead.
+   * To access only the response body, use `apiTestGetTestsPost()` instead.
    *
-   * This method doesn't expect any request body.
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiTestGetTestsGet$Response(params?: {
-    category?: number;
+  apiTestGetTestsPost$Response(params?: {
+    body?: Array<number>
   }): Observable<StrictHttpResponse<TestDtoArrayServiceResponse>> {
 
-    const rb = new RequestBuilder(this.rootUrl, TestService.ApiTestGetTestsGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, TestService.ApiTestGetTestsPostPath, 'post');
     if (params) {
-      rb.query('category', params.category, {});
+      rb.body(params.body, 'application/*+json');
     }
 
     return this.http.request(rb.build({
@@ -67,15 +67,15 @@ export class TestService extends BaseService {
    *
    *
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiTestGetTestsGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiTestGetTestsPost$Response()` instead.
    *
-   * This method doesn't expect any request body.
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiTestGetTestsGet(params?: {
-    category?: number;
+  apiTestGetTestsPost(params?: {
+    body?: Array<number>
   }): Observable<TestDtoArrayServiceResponse> {
 
-    return this.apiTestGetTestsGet$Response(params).pipe(
+    return this.apiTestGetTestsPost$Response(params).pipe(
       map((r: StrictHttpResponse<TestDtoArrayServiceResponse>) => r.body as TestDtoArrayServiceResponse)
     );
   }

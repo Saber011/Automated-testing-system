@@ -4,6 +4,6 @@ export interface ArticleDto {
   articleId?: number;
   categoryIds?: null | Array<number>;
   text: string;
-  title?: null | string;
+  title: string;
   total: number;
 }

@@ -14,7 +14,7 @@ export class TestListComponent implements OnInit {
   @Output() actionButton: EventEmitter<TestDto> = new EventEmitter<TestDto>();
   tests!: Array<TestDto>;
   category!: Array<DictionaryItemDto>;
-  selectedValue: number | undefined;
+  selectedValues!: number[];
 
   constructor(private readonly testService: TestService, private readonly dictionaryService: DictionaryService) { }
 
@@ -29,15 +29,15 @@ export class TestListComponent implements OnInit {
   }
 
   refreshData(){
-    if(this.selectedValue) {
-      this.testService.apiTestGetTestsGet({category: this.selectedValue})
+    if(this.selectedValues) {
+      this.testService.apiTestGetTestsPost({ body:  this.selectedValues })
         .subscribe(data => {
           if (data && data.content) {
             this.tests = data.content;
           }
         });
     } else {
-      this.testService.apiTestGetTestsGet({})
+      this.testService.apiTestGetTestsPost({ body:  [] })
         .subscribe(data => {
           if (data && data.content) {
             this.tests = data.content;
