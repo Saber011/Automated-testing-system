@@ -1,4 +1,4 @@
 <button (click)="addTest()" mat-button>Добавить тест</button>
-<app-test-list buttonName = "Изменить тест">
+<app-test-list buttonName = "Удалить тест" (actionButton)="removeTest($event)">
 
 </app-test-list>

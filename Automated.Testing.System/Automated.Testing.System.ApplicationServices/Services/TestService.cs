@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Automated.Testing.System.ApplicationServices.Interfaces;
@@ -7,6 +8,7 @@ using Automated.Testing.System.Common.Test.Dto;
 using Automated.Testing.System.Common.Test.Dto.Request;
 using Automated.Testing.System.Core.Core;
 using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
+using Microsoft.Extensions.Primitives;
 using NotImplementedException = System.NotImplementedException;
 
 namespace Automated.Testing.System.ApplicationServices.Services
@@ -14,13 +16,15 @@ namespace Automated.Testing.System.ApplicationServices.Services
     /// <inheritdoc />
     public class TestService : ITestService
     {
+        private readonly IUserService _userService;
         private readonly ITestRepository _testRepository;
         private readonly IMapper _mapper;
 
-        public TestService(ITestRepository testRepository, IMapper mapper)
+        public TestService(ITestRepository testRepository, IMapper mapper, IUserService userService)
         {
             _testRepository = testRepository;
             _mapper = mapper;
+            _userService = userService;
         }
         
         /// <inheritdoc />
@@ -54,16 +58,35 @@ namespace Automated.Testing.System.ApplicationServices.Services
         }
 
         /// <inheritdoc />
-        public Task<dynamic> CheckTestResultsAsync(dynamic request)
+        public async Task<TestPassedResultDto> CheckTestResultsAsync(CheckPassTestRequest request)
         {
-            throw new NotImplementedException();
+            var userInfo = await _userService.GetCurrentUserInfo();
+            var testAnswers = await _testRepository.GetTestTaskAnswersAsync(request.TestId);
+            var countCorrect = 0;
+            var allTaskInTest = testAnswers.Select(x => x.taskId).Distinct().Count();
+            foreach (var taskId in testAnswers.Select(x => x.taskId).Distinct())
+            {
+                var userAnswers = request.ExecuteTasks.FirstOrDefault(task => task.TaskId == taskId)?.Answer;
+                var correctAnswers = testAnswers.Where(x => x.taskId == taskId).Select(x => x.answer).ToArray();
+                var correctAnswer = string.Join(",", correctAnswers);
+                var isCorrect = correctAnswers.Any(x => userAnswers != null && userAnswers.Contains(x));
+                countCorrect += isCorrect ? 1 : 0;
+                await _testRepository.WriteUserTestResultAsync(userInfo.Id, request.TestId, taskId, userAnswers, correctAnswer, isCorrect);
+            }
+
+            return new TestPassedResultDto
+            {
+                CountTask = allTaskInTest,
+                CountCorrectAnswer = countCorrect,
+            };
         }
 
         public async Task<bool> CreateTestAsync(CreateTestRequest request)
         {
             Guard.NotNull(request, nameof(request));
+            var userInfo = await _userService.GetCurrentUserInfo();
 
-            var testId = await _testRepository.CreateTestAsync(request.TestName, request.UserId);
+            var testId = await _testRepository.CreateTestAsync(request.TestName, userInfo.Id);
             await _testRepository.CreateTestCategoryAsync(testId, request.CategoryIds);
             foreach (var task in request.Task)
             {
@@ -71,8 +94,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
                 await Task.WhenAll(_testRepository.CreateTestTaskResponseOptionAsync(task.ResponseOptions, taskId),
                     _testRepository.CreateTestTaskAnswersAsync(task.Answers, taskId));
             }
-
-
+            
             return true;
         }
 

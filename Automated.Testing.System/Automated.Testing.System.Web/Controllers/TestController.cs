@@ -4,6 +4,7 @@ using Automated.Testing.System.Common.Test.Dto;
 using Automated.Testing.System.Common.Test.Dto.Request;
 using Automated.Testing.System.Core.Execute;
 using Automated.Testing.System.Core.Execute.models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Automated.Testing.System.Web.Controllers
@@ -11,7 +12,7 @@ namespace Automated.Testing.System.Web.Controllers
     /// <summary>
     /// Api для работы со справочниками
     /// </summary>
-    // [Authorize]
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Produces("application/json")]
@@ -33,7 +34,7 @@ namespace Automated.Testing.System.Web.Controllers
         [HttpPost]
         public async Task<ServiceResponse<TestDto[]>> GetTests(int[] categoryIds)
         {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _testService.GetTestsAsync(categoryIds));
+            return ServiceResponseHelper.ConvertToServiceResponse(await _testService.GetTestsAsync(categoryIds));
         }
         
         /// <summary>
@@ -45,19 +46,7 @@ namespace Automated.Testing.System.Web.Controllers
         [HttpGet]
         public async Task<ServiceResponse<TestTaskDto[]>> GetTestTask(int testId)
         {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _testService.GetTestTaskAsync(testId));
-        }
-        
-        /// <summary>
-        /// Проверить решение теста
-        /// </summary>
-        /// <response code = "200" > Успешное выполнение.</response>
-        /// <response code = "401" > Данный запрос требует аутентификации.</response>
-        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
-        [HttpPost]
-        public async Task<ServiceResponse<TestTaskDto[]>> CheckTest(int testId)
-        {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _testService.GetTestTaskAsync(testId));
+            return ServiceResponseHelper.ConvertToServiceResponse(await _testService.GetTestTaskAsync(testId));
         }
         
         /// <summary>
@@ -69,7 +58,7 @@ namespace Automated.Testing.System.Web.Controllers
         [HttpPost]
         public async Task<ServiceResponse<bool>> AddTest(CreateTestRequest request)
         {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _testService.CreateTestAsync(request));
+            return ServiceResponseHelper.ConvertToServiceResponse(await _testService.CreateTestAsync(request));
         }
         
         /// <summary>
@@ -81,7 +70,7 @@ namespace Automated.Testing.System.Web.Controllers
         [HttpPost]
         public async Task<ServiceResponse<bool>> RemoveTest(int testId)
         {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _testService.RemoveTestAsync(testId));
+            return ServiceResponseHelper.ConvertToServiceResponse(await _testService.RemoveTestAsync(testId));
         }
         
         /// <summary>
@@ -93,8 +82,19 @@ namespace Automated.Testing.System.Web.Controllers
         [HttpPost]
         public async Task<ServiceResponse<bool>> UpdateTest(UpdateTestRequest request)
         {
-            return ServiceResponseHelper.ConvertToServiceResponse(await  _testService.UpdateTestAsync(request));
+            return ServiceResponseHelper.ConvertToServiceResponse(await _testService.UpdateTestAsync(request));
         }
 
+        /// <summary>
+        /// Пройти тест
+        /// </summary>
+        /// <response code = "200" > Успешное выполнение.</response>
+        /// <response code = "401" > Данный запрос требует аутентификации.</response>
+        /// <response code = "500" > Непредвиденная ошибка сервера.</response>
+        [HttpPost]
+        public async Task<ServiceResponse<TestPassedResultDto>> PassTest(CheckPassTestRequest request)
+        {
+            return ServiceResponseHelper.ConvertToServiceResponse(await _testService.CheckTestResultsAsync(request));
+        }
     }
 }

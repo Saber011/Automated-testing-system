@@ -16,7 +16,7 @@ namespace Automated.Testing.System.Web.Controllers
     /// <summary>
     /// Api для работы с пользователями
     /// </summary>
-    //  [Authorize]
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Produces("application/json")]
@@ -72,7 +72,6 @@ namespace Automated.Testing.System.Web.Controllers
         /// <response code = "401" > Данный запрос требует аутентификации.</response>
         /// <response code = "500" > Непредвиденная ошибка сервера.</response>
         [HttpPut]
-        [AllowAnonymous]
         public async Task<ServiceResponse<bool>> UpdateUserInfo(UpdaterUserRequest request)
         {
             return ServiceResponseHelper.ConvertToServiceResponse(await _userService.UpdateUserInfoAsync(request));

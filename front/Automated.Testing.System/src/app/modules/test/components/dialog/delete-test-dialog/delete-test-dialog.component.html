@@ -1,0 +1,8 @@
+<h1 mat-dialog-title> ВНИМАНИЕ </h1>
+<div mat-dialog-content>
+  <p>Вы уверены что хотите удалить тест?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Нет</button>
+  <button mat-button (click)="deleteTest()" cdkFocusInitial>Да</button>
+</div>

@@ -23,6 +23,11 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Entities
         public string Password { get; set; }
         
         /// <summary>
+        /// Роли
+        /// </summary>
+        public int[] Roles { get; set; }
+        
+        /// <summary>
         /// Рефреш токены.
         /// </summary>
         public RefreshToken[] RefreshTokens { get; set; }

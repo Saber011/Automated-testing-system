@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Результат тестирования!</h1>
+<div mat-dialog-content>
+  <ul>
+    <li>
+      Общее количество вопросов: {{data.countTask}}
+    </li>
+    <li>
+       Количество правильных ответов: {{data.countCorrectAnswer}}
+    </li>
+    <li>
+      Количество не правильных ответов: {{data.countTask - data.countCorrectAnswer}}
+    </li>
+    <li>
+      Процент правильных ответов: {{ ((data.countCorrectAnswer / data.countTask)*100).toFixed(2)}} %
+    </li>
+  </ul>
+</div>

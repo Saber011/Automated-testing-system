@@ -25,11 +25,6 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         Task<Test[]> GetTestsAsync(int[] categoryIds);
 
         /// <summary>
-        /// Проверить результат теста.
-        /// </summary>
-        Task<dynamic> CheckTestResultsAsync(dynamic request);
-        
-        /// <summary>
         /// Создать тест
         /// </summary>
         Task<int> CreateTestAsync(string name, int userId);
@@ -68,5 +63,16 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         /// Удалить всю дополнительную информацию по тесту
         /// </summary>
         Task<bool> DeleteTestInformationTaskAsync(int testId);
+
+        /// <summary>
+        /// Получить ответы для теста.
+        /// </summary>
+        Task<(int taskId, string answer)[]> GetTestTaskAnswersAsync(int testId);
+
+        /// <summary>
+        /// Записать результаты прохождения теста
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> WriteUserTestResultAsync(int userId, int testId, int taskId, string userAnswer, string correctAnswer, bool answerIsCorrect);
     }
 }

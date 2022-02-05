@@ -1,5 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Component, OnInit} from '@angular/core';
+import {MatDialogRef} from "@angular/material/dialog";
 import {CreateTestRequest} from "../../../../../api/models/create-test-request";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatIconRegistry} from "@angular/material/icon";
@@ -7,9 +7,6 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {DictionaryService} from "../../../../../api/services/dictionary.service";
 import {DictionaryItemDto} from "../../../../../api/models/dictionary-item-dto";
 import {TestService} from "../../../../../api/services/test.service";
-import {AuthService} from "../../../../../core";
-import {UserDto} from "../../../../../api/models/user-dto";
-import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-add-test-dialog',
@@ -20,13 +17,9 @@ export class AddTestDialogComponent implements OnInit {
   myForm : FormGroup;
   category!: Array<DictionaryItemDto>;
   test!: CreateTestRequest;
-  userInfo :UserDto | null | undefined;
-  private ngUnsubscribe$ = new Subject();
-
   constructor(
     public dialogRef: MatDialogRef<AddTestDialogComponent>,
     private formBuilder: FormBuilder,
-    private authService: AuthService,
     private readonly testService: TestService,
     private readonly dictionaryService: DictionaryService,
     iconRegistry: MatIconRegistry,
@@ -53,12 +46,6 @@ export class AddTestDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.authService.user$.pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe((x) => {
-        this.userInfo = x;
-      });
-
     this.dictionaryService.apiDictionaryGetDictionaryElementsByDictionaryIdGet({id: 1})
       .subscribe(data => {
         if(data && data.content) {
@@ -120,13 +107,10 @@ export class AddTestDialogComponent implements OnInit {
       testName: this.myForm.get('testName')?.value,
         categoryIds: this.myForm.get('testCategory')?.value,
         task: this.myForm.get("tasks")?.value,
-        userId: this.userInfo?.id
       }})
       .subscribe(response =>
       {
         console.log(response);
       })
-    console.log(this.myForm.get('tasks'));
-    console.log(this.myForm);
   }
 }

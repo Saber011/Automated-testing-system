@@ -16,7 +16,7 @@ namespace Automated.Testing.System.Web.Controllers
     /// <summary>
     /// Api для работы с пользователями
     /// </summary>
-    //  [Authorize]
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Produces("application/json")]
@@ -117,6 +117,11 @@ namespace Automated.Testing.System.Web.Controllers
                 Expires = DateTime.UtcNow.AddDays(7)
             };
             Response.Cookies.Append("refreshToken", token, cookieOptions);
+        }
+        
+        private void DeleteTokenCookie()
+        {
+            Response.Cookies.Delete("refreshToken");
         }
 
         private string IpAddress()

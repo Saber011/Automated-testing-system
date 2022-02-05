@@ -21,8 +21,13 @@
         public string Title { get; set; }
         
         /// <summary>
-        /// Категория
+        /// Категории
         /// </summary>
-        public int CategoryId { get; set; }
+        public int[] CategoryIds { get; set; }
+        
+        /// <summary>
+        /// Количество
+        /// </summary>
+        public int Total { get; set; }
     }
 }

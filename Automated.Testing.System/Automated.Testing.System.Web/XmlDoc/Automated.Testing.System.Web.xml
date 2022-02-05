@@ -144,14 +144,6 @@
             <response code = "401" > Данный запрос требует аутентификации.</response>
             <response code = "500" > Непредвиденная ошибка сервера.</response>
         </member>
-        <member name="M:Automated.Testing.System.Web.Controllers.TestController.CheckTest(System.Int32)">
-            <summary>
-            Проверить решение теста
-            </summary>
-            <response code = "200" > Успешное выполнение.</response>
-            <response code = "401" > Данный запрос требует аутентификации.</response>
-            <response code = "500" > Непредвиденная ошибка сервера.</response>
-        </member>
         <member name="M:Automated.Testing.System.Web.Controllers.TestController.AddTest(Automated.Testing.System.Common.Test.Dto.Request.CreateTestRequest)">
             <summary>
             Добавить тест
@@ -171,6 +163,14 @@
         <member name="M:Automated.Testing.System.Web.Controllers.TestController.UpdateTest(Automated.Testing.System.Common.Test.Dto.Request.UpdateTestRequest)">
             <summary>
             Обновить тест
+            </summary>
+            <response code = "200" > Успешное выполнение.</response>
+            <response code = "401" > Данный запрос требует аутентификации.</response>
+            <response code = "500" > Непредвиденная ошибка сервера.</response>
+        </member>
+        <member name="M:Automated.Testing.System.Web.Controllers.TestController.PassTest(Automated.Testing.System.Common.Test.Dto.Request.CheckPassTestRequest)">
+            <summary>
+            Пройти тест
             </summary>
             <response code = "200" > Успешное выполнение.</response>
             <response code = "401" > Данный запрос требует аутентификации.</response>

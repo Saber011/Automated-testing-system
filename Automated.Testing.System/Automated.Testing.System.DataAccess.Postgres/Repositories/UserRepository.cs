@@ -7,6 +7,7 @@ using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
 using Automated.Testing.System.DataAccess.Postgres.Extensions;
 using Automated.Testing.System.DatabaseProvider.Postgres;
 using Dapper;
+using NotImplementedException = System.NotImplementedException;
 
 namespace Automated.Testing.System.DataAccess.Postgres.Repositories
 {
@@ -66,6 +67,33 @@ SELECT user_id AS {nameof(User.Id)},
 
             return await _postgresService.Execute(query, async connection
                 => (await connection.QueryFirstOrDefaultAsync<User>(query, new { login })));
+        }
+        
+        /// <inheritdoc />
+        public async Task<int[]> GetUserRolesAsync(int userId)
+        {
+            const string query = $@"
+SELECT role_id
+  FROM core.user_roles
+ WHERE user_id = :userId";
+
+            return await _postgresService.Execute(query, async connection
+                => (await connection.QueryAsync<int>(query, new { userId })).ToArray());
+        }
+
+        /// <inheritdoc />
+        public async Task<User> GetUserByToken(string token)
+        {
+            const string query = $@"
+SELECT user_id AS {nameof(User.Id)},
+       login AS {nameof(User.Login)}
+  FROM core.""user""
+ WHERE user_id in (SELECT user_id
+                     FROM core.user_token
+                    WHERE token = :token)";
+
+            return await _postgresService.Execute(query, async connection
+                => (await connection.QueryFirstOrDefaultAsync<User>(query, new { token })));
         }
 
         /// <inheritdoc />

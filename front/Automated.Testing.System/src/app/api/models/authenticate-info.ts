@@ -4,4 +4,6 @@ export interface AuthenticateInfo {
   id?: number;
   jwtToken?: null | string;
   login?: null | string;
+  refreshToken?: null | string;
+  roles?: null | Array<number>;
 }

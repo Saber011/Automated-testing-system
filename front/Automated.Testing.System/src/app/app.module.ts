@@ -12,13 +12,19 @@ import {RouterModule} from "@angular/router";
 import { AppPreloaderContainerComponent } from './component/app-preloader-container/app-preloader-container.component';
 import {SelectivePreloadingStrategy} from "./core/services/selective-preload-strategy";
 import { NotFoundComponent } from './component/not-found/not-found.component';
+import {HeaderComponent} from "./component/header/header.component";
+import {SideNavComponent} from "./component/side-nav/side-nav.component";
+import {SideNavContentComponent} from "./component/side-nav-content/side-nav-content.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     AppShellComponent,
     AppPreloaderContainerComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    HeaderComponent,
+    SideNavComponent,
+    SideNavContentComponent
   ],
   imports: [
     BrowserModule,

@@ -38,12 +38,12 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         /// <summary>
         /// Получить статьи
         /// </summary>
-        Task<Article[]> GetArticlesAsync(string? title, int pageSize, int pageNumber);
+        Task<Article[]> GetArticlesAsync(string? title, int pageSize, int pageNumber, int[]? categoryIds);
         
         /// <summary>
-        /// Получить количество статьи
+        /// Получить категории для статей.
         /// </summary>
-        Task<int> GetTotalArticlesAsync();
+        Task<(int articleId, int categoryId)[]> GetArticleCategoriesAsync(int[] articleIds);
 
         /// <summary>
         /// Создать новую статью
