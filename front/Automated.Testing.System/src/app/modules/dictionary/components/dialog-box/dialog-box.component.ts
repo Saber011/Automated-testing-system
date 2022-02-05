@@ -26,6 +26,27 @@ export class DialogBoxComponent implements OnInit {
     this.dialogRef.close({event:'Cancel'});
   }
 
+  convertToUi(isTitle: boolean | null): string {
+    if(this.action == 'Add'){
+      if(isTitle){
+        return "Добавление";
+      }
+      return "Сохранить";
+    }
+    if(this.action == 'Update'){
+      if(isTitle){
+        return "Изменение";
+      }
+      return "Изменить";
+    }
+    if(this.action == 'Delete'){
+      if(isTitle){
+        return "Удаление";
+      }
+      return "Удалить";
+    }
+    return '';
+  }
 
   ngOnInit(): void {
   }
