@@ -6,11 +6,6 @@
     public sealed class CreateTestRequest
     {
         /// <summary>
-        /// Создатель теста
-        /// </summary>
-        public int UserId { get; set; }
-        
-        /// <summary>
         /// Наименование теста
         /// </summary>
         public string TestName { get; set; }

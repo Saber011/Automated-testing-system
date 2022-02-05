@@ -1,7 +1,6 @@
 <mat-form-field appearance="fill">
   <mat-label>Выберете категорию:</mat-label>
   <mat-select (selectionChange) = "refreshData()"  [(ngModel)]="selectedValues" multiple>
-    <mat-option>None</mat-option>
     <mat-option *ngFor="let item of category" [value]="item.elementId">
       {{item.name}}
     </mat-option>

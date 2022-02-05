@@ -53,15 +53,14 @@
           </div>
       </div>
     </div>
-    <button class="btn btn-default" (click)="addTask()">
+    <button  mat-button  (click)="addTask()">
       Добавить задачу теста
     </button>
-    <button class="btn btn-default">
+    <button  mat-button >
       Сохранить
     </button>
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">Закрыть, без сохранения</button>
 </div>

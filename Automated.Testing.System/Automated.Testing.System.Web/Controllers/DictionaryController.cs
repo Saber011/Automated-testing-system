@@ -12,7 +12,7 @@ namespace Automated.Testing.System.Web.Controllers
     /// <summary>
     /// Api для работы со справочниками
     /// </summary>
-    // [Authorize]
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Produces("application/json")]

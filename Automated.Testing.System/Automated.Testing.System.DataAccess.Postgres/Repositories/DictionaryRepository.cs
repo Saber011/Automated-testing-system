@@ -9,6 +9,7 @@ using Automated.Testing.System.DataAccess.Abstractions.Entities;
 using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
 using Automated.Testing.System.DatabaseProvider.Postgres;
 using Dapper;
+using Microsoft.VisualBasic;
 
 namespace Automated.Testing.System.DataAccess.Postgres.Repositories
 {
@@ -55,32 +56,39 @@ SELECT table_name
         }
 
         /// <inheritdoc />
-        public async Task<Article[]> GetArticlesAsync(string? title, int pageSize, int pageNumber)
+        public async Task<Article[]> GetArticlesAsync(string? title, int pageSize, int pageNumber, int[]? categoryIds)
         {
             var titleFilter = !string.IsNullOrWhiteSpace(title)
                 ? $"AND t.title like '%{title}%'"
+                : string.Empty;
+            var catFilter = categoryIds?.Length > 0
+                ? $"inner join core.ref_article_category ref on ref.article_id = t.article_id and  ref.category_id in ({string.Join(",", categoryIds)})"
                 : string.Empty;
             
             var startRow = (pageNumber - 1) * pageSize + 1;
             var endRow = startRow + pageSize - 1;
             
             var query = @$"
-SELECT article_id as {nameof(Article.ArticleId)},
+SELECT distinct res.article_id as {nameof(Article.ArticleId)},
        text as {nameof(Article.Text)},
        title as {nameof(Article.Title)},
        row_number,
-       category_id as {nameof(Article.CategoryId)}
+       total as {nameof(Article.Total)}
+FROM (SELECT article_id,
+       text,
+       title,
+       row_number,
+       COUNT (article_id) OVER () as total
   FROM (SELECT t.article_id,
                t.text,
                t.title,
-               rtc.category_id,
                ROW_NUMBER () OVER (
                    ORDER BY t.title
                 )
           FROM core.article t
-     INNER JOIN core.ref_article_category rtc on t.article_id = rtc.article_id
+          {catFilter}
          WHERE 1 = 1
-           {titleFilter}) as dta
+           {titleFilter}) as dta) as res
 WHERE row_number BETWEEN :startRow and :endRow";
             
             return await _postgresService.Execute(query, async connection
@@ -88,14 +96,16 @@ WHERE row_number BETWEEN :startRow and :endRow";
         }
 
         /// <inheritdoc />
-        public async Task<int> GetTotalArticlesAsync()
+        public async Task<(int, int)[]> GetArticleCategoriesAsync(int[] articleIds)
         {
-            const string query = @"
-SELECT count(1)
-FROM core.article";
+            var query = @$"
+SELECT article_id,
+       category_id
+  FROM core.ref_article_category
+ WHERE article_id in ({string.Join(",", articleIds)})";
 
             return await _postgresService.Execute(query, async connection
-                => await connection.QueryFirstOrDefaultAsync<int>(query));
+                => (await connection.QueryAsync<(int, int)>(query)).ToArray());
         }
 
         /// <inheritdoc />

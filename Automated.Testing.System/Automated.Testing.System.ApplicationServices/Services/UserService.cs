@@ -4,7 +4,9 @@ using Automated.Testing.System.ApplicationServices.Interfaces;
 using Automated.Testing.System.Common.User.Dto;
 using Automated.Testing.System.Common.User.Dto.Request;
 using Automated.Testing.System.Core.Core;
+using Automated.Testing.System.DataAccess.Abstractions.Entities;
 using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Automated.Testing.System.ApplicationServices.Services
 {
@@ -13,11 +15,29 @@ namespace Automated.Testing.System.ApplicationServices.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private const string Bearer = "Bearer ";
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(
+            IUserRepository userRepository,
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+        }
+        
+        /// <inheritdoc />
+        public async Task<User> GetCurrentUserInfo()
+        {
+            var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"];
+            if (token is not null)
+            {
+                return await _userRepository.GetUserByToken(token.Value.ToString().Replace(Bearer, string.Empty));
+            }
+            
+            return null;
         }
 
         /// <inheritdoc />
@@ -36,6 +56,8 @@ namespace Automated.Testing.System.ApplicationServices.Services
             var user = await _userRepository.GetByIdAsync(id);
             var token = await _userRepository.GetUserTokens(user.Id);
             user.RefreshTokens = token;
+            var roles = await _userRepository.GetUserRolesAsync(user.Id);
+            user.Roles = roles;
             
             return _mapper.Map<UserDto>(user);
         }

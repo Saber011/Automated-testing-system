@@ -1,17 +1,20 @@
 <ng-container *ngIf="userInfo">
-<header class="header">
-    <div class="header__container">
-      <div class="separator"></div>
-      <div class="breadcrumbs__container">
-      </div>
-    </div>
-</header>
-<nav>
-  <ul id="navbar">
-    <li> <a  [routerLink]="['/home']">Главное меню</a> </li>
-  </ul>
-</nav>
-  </ng-container>
+<app-side-nav
+  [sidenavTemplateRef]="navContent"
+  [direction]="navDirection"
+  [navWidth]="280"
+  [duration]="0.5"></app-side-nav>
+<div class="main-container">
+  <app-header></app-header>
+  <section>
+  </section>
+</div>
+
+<ng-template #navContent>
+  <app-side-nav-content></app-side-nav-content>
+</ng-template>
+</ng-container>
+
 <main>
   <router-outlet></router-outlet>
 </main>

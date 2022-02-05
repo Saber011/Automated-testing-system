@@ -5,7 +5,6 @@ import { map, tap, delay, finalize } from 'rxjs/operators';
 import {UserDto} from "../../api/models/user-dto";
 import {AuthenticateInfo} from "../../api/models/authenticate-info";
 import {AccountService} from "../../api/services/account.service";
-import {removeCookie} from "typescript-cookie";
 
 
 @Injectable({
@@ -49,7 +48,8 @@ export class AuthService implements OnDestroy{
       .subscribe(data => {
         this._user.next({
           login: data.content?.login,
-          id: data.content?.id
+          id: data.content?.id,
+          roles: data.content?.roles
         });
 
         if (data.content) {
@@ -74,8 +74,8 @@ export class AuthService implements OnDestroy{
   }
 
   refreshToken() : Observable<any> {
-    const refreshToken = localStorage.getItem('refresh_token');
-    if (refreshToken) {
+    const refreshToken = localStorage.getItem('access_token');
+    if (!refreshToken) {
       this.clearLocalStorage();
       return of(null);
     }
@@ -85,6 +85,7 @@ export class AuthService implements OnDestroy{
           this._user.next({
             login: data.content?.login,
             id: data.content?.id,
+            roles: data.content?.roles
           });
           if(data.responseInfo !== null && data.content) {
             this.setLocalStorage(data.content);
@@ -98,6 +99,7 @@ export class AuthService implements OnDestroy{
 
   setLocalStorage(x: AuthenticateInfo) {
     localStorage.setItem('access_token', x?.jwtToken ?? "");
+    localStorage.setItem('refresh-token', x?.refreshToken ?? "");
     localStorage.setItem('login-event', 'login' + Math.random());
   }
 

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../../../core";
+import {UserDto} from "../../../../api/models/user-dto";
+import {UserRole} from "../../../../core/models/user-role";
 
 @Component({
   selector: 'app-home',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  includeAdminModule!: boolean | undefined;
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.user$.subscribe(user =>{
+      this.includeAdminModule = user?.roles?.some(x => x == UserRole.Admin);
+    })
   }
 
 }

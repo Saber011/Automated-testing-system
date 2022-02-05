@@ -11,17 +11,19 @@ import {MatSelectModule} from "@angular/material/select";
 import { ExecuteTestComponent } from './components/execute-test/execute-test.component';
 import { TestListComponent } from './components/test-list/test-list.component';
 import { MatListModule} from "@angular/material/list";
-import { CreateTestComponent } from './components/create-test/create-test.component';
+import { CreateTestComponent } from './components/change-test/create-test.component';
 import { AddTestDialogComponent } from './components/dialog/add-test-dialog/add-test-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatRippleModule} from "@angular/material/core";
 import {MatIconModule} from "@angular/material/icon";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ResultTestDialogComponent } from './components/dialog/result-test-dialog/result-test-dialog.component';
+import { DeleteTestDialogComponent } from './components/dialog/delete-test-dialog/delete-test-dialog.component';
 
 
 @NgModule({
-  declarations: [LearningTestComponent, ExecuteTestComponent, TestListComponent, CreateTestComponent, AddTestDialogComponent],
+  declarations: [LearningTestComponent, ExecuteTestComponent, TestListComponent, CreateTestComponent, AddTestDialogComponent, ResultTestDialogComponent, DeleteTestDialogComponent],
   imports: [
     CommonModule,
     TestRoutingModule,

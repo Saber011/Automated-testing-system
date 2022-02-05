@@ -27,7 +27,7 @@ namespace Automated.Testing.System.ApplicationServices.Interfaces
         /// <summary>
         /// Проверить результат теста.
         /// </summary>
-        Task<dynamic> CheckTestResultsAsync(dynamic request);
+        Task<TestPassedResultDto> CheckTestResultsAsync(CheckPassTestRequest request);
         
         /// <summary>
         /// Создать пользователя

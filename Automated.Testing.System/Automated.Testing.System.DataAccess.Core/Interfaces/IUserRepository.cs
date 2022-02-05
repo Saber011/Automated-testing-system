@@ -21,9 +21,19 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         Task<User> GetByIdAsync(int id);
 
         /// <summary>
+        /// Получить Роли пользователя.
+        /// </summary>
+        Task<int[]> GetUserRolesAsync(int userId);
+
+        /// <summary>
         /// Получить пользователя по логину.
         /// </summary>
         Task<User> GetByLoginAsync(string login);
+        
+        /// <summary>
+        /// Получить пользователя по токену.
+        /// </summary>
+        Task<User> GetUserByToken(string token);
         
         /// <summary>
         /// Создать пользователя

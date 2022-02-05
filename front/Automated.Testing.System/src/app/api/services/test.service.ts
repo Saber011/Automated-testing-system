@@ -10,8 +10,10 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { BooleanServiceResponse } from '../models/boolean-service-response';
+import { CheckPassTestRequest } from '../models/check-pass-test-request';
 import { CreateTestRequest } from '../models/create-test-request';
 import { TestDtoArrayServiceResponse } from '../models/test-dto-array-service-response';
+import { TestPassedResultDtoServiceResponse } from '../models/test-passed-result-dto-service-response';
 import { TestTaskDtoArrayServiceResponse } from '../models/test-task-dto-array-service-response';
 import { UpdateTestRequest } from '../models/update-test-request';
 
@@ -130,60 +132,6 @@ export class TestService extends BaseService {
   }): Observable<TestTaskDtoArrayServiceResponse> {
 
     return this.apiTestGetTestTaskGet$Response(params).pipe(
-      map((r: StrictHttpResponse<TestTaskDtoArrayServiceResponse>) => r.body as TestTaskDtoArrayServiceResponse)
-    );
-  }
-
-  /**
-   * Path part for operation apiTestCheckTestPost
-   */
-  static readonly ApiTestCheckTestPostPath = '/api/Test/CheckTest';
-
-  /**
-   * Проверить решение теста.
-   *
-   *
-   *
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiTestCheckTestPost()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiTestCheckTestPost$Response(params?: {
-    testId?: number;
-  }): Observable<StrictHttpResponse<TestTaskDtoArrayServiceResponse>> {
-
-    const rb = new RequestBuilder(this.rootUrl, TestService.ApiTestCheckTestPostPath, 'post');
-    if (params) {
-      rb.query('testId', params.testId, {});
-    }
-
-    return this.http.request(rb.build({
-      responseType: 'json',
-      accept: 'application/json'
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<TestTaskDtoArrayServiceResponse>;
-      })
-    );
-  }
-
-  /**
-   * Проверить решение теста.
-   *
-   *
-   *
-   * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiTestCheckTestPost$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiTestCheckTestPost(params?: {
-    testId?: number;
-  }): Observable<TestTaskDtoArrayServiceResponse> {
-
-    return this.apiTestCheckTestPost$Response(params).pipe(
       map((r: StrictHttpResponse<TestTaskDtoArrayServiceResponse>) => r.body as TestTaskDtoArrayServiceResponse)
     );
   }
@@ -347,6 +295,60 @@ export class TestService extends BaseService {
 
     return this.apiTestUpdateTestPost$Response(params).pipe(
       map((r: StrictHttpResponse<BooleanServiceResponse>) => r.body as BooleanServiceResponse)
+    );
+  }
+
+  /**
+   * Path part for operation apiTestPassTestPost
+   */
+  static readonly ApiTestPassTestPostPath = '/api/Test/PassTest';
+
+  /**
+   * Пройти тест.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiTestPassTestPost()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiTestPassTestPost$Response(params?: {
+    body?: CheckPassTestRequest
+  }): Observable<StrictHttpResponse<TestPassedResultDtoServiceResponse>> {
+
+    const rb = new RequestBuilder(this.rootUrl, TestService.ApiTestPassTestPostPath, 'post');
+    if (params) {
+      rb.body(params.body, 'application/*+json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<TestPassedResultDtoServiceResponse>;
+      })
+    );
+  }
+
+  /**
+   * Пройти тест.
+   *
+   *
+   *
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiTestPassTestPost$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiTestPassTestPost(params?: {
+    body?: CheckPassTestRequest
+  }): Observable<TestPassedResultDtoServiceResponse> {
+
+    return this.apiTestPassTestPost$Response(params).pipe(
+      map((r: StrictHttpResponse<TestPassedResultDtoServiceResponse>) => r.body as TestPassedResultDtoServiceResponse)
     );
   }
 

@@ -19,6 +19,11 @@ namespace Automated.Testing.System.Common.User.Dto
         public string Login { get; set; }
         
         /// <summary>
+        /// Роли
+        /// </summary>
+        public int[] Roles { get; set; }
+        
+        /// <summary>
         /// Рефреш токены.
         /// </summary>
         public RefreshToken[] RefreshTokens { get; set; }

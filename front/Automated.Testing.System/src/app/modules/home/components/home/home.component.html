@@ -1,17 +1,93 @@
-<mat-grid-list cols="2" rowHeight="2:1">
+<mat-grid-list cols="3" rowHeight="1:1.10" >
   <mat-grid-tile>
-    <a [routerLink]="['/test']">Прохождение тестов</a>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Проверить свои знания</mat-card-title>
+        <mat-card-subtitle>Veni, vidi, vici</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="./assets/1.jpg" height="334" alt="Photo of a Veni, vidi, vici">
+      <mat-card-content>
+        <p>
+          Пройти обучающие тесты, в различных дисциплинах.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button [routerLink]="['/test']">Перейти</button>
+      </mat-card-actions>
+    </mat-card>
   </mat-grid-tile>
-  <mat-grid-tile [ngClass] = "'dictionary'">
-    <a [routerLink]="['/dictionary']">Введение справочной информации</a>
+  <mat-grid-tile *ngIf="includeAdminModule">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Обновить справочную информацию</mat-card-title>
+        <mat-card-subtitle>A posteriōri</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="./assets/2.jpg" height="334" alt="Photo of a posteriōri">
+      <mat-card-content>
+        <p>
+          Актуализировать информацию о новом материале для обучения, изменить системную информацию.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button [routerLink]="['/dictionary']">Перейти</button>
+      </mat-card-actions>
+    </mat-card>
   </mat-grid-tile>
   <mat-grid-tile>
-    <a [routerLink]="['/test/create']">Добавление новых тестов</a>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Создать новые тесты</mat-card-title>
+        <mat-card-subtitle>Docendo discĭmus</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="./assets/3.jpg" height="334" alt="Photo of a Docendo discĭmus">
+      <mat-card-content>
+        <p>
+          Поделиться знаниями, создав новые тесты в различных категориях.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button [routerLink]="['/test/create']">Перейти</button>
+      </mat-card-actions>
+    </mat-card>
+
   </mat-grid-tile>
   <mat-grid-tile>
-    <a [routerLink]="['/article']">Обучающий материал</a>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Изучить новый материал</mat-card-title>
+        <mat-card-subtitle>Repetitio est mater studiōrum</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="./assets/4.jpg" height="334" alt="Photo of a Repetitio est mater studiōrum">
+      <mat-card-content>
+        <p>
+          Освоить допольный материал по различным темам.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button [routerLink]="['/article']">Перейти</button>
+      </mat-card-actions>
+    </mat-card>
   </mat-grid-tile>
-  <mat-grid-tile>
-    <a [routerLink]="['/administration']">Администрирование</a>
+  <mat-grid-tile *ngIf="includeAdminModule">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Администрирование</mat-card-title>
+        <mat-card-subtitle>Scio me nihil scire</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="./assets/5.jpg" height="334" alt="Photo of a Scio me nihil scire">
+      <mat-card-content>
+        <p>
+          Администрирование над учетными записями пользователей системы.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button [routerLink]="['/administration']">Перейти</button>
+      </mat-card-actions>
+    </mat-card>
   </mat-grid-tile>
 </mat-grid-list>

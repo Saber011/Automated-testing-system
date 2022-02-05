@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Automated.Testing.System.Core.Core;
 using Automated.Testing.System.DataAccess.Abstractions.Entities;
 using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
+using Automated.Testing.System.DataAccess.Postgres.Extensions;
 using Automated.Testing.System.DatabaseProvider.Postgres;
 using Dapper;
 
@@ -81,7 +82,7 @@ where test_task_id in ({string.Join(",", taskIds)})";
             var filter = string.Empty;
             if (categoryIds.Length > 0)
             {
-                filter = $"WHERE category_id in ({string.Join(",", categoryIds)})";
+                filter = $"AND category_id in ({string.Join(",", categoryIds)})";
             }
             
             var query = $@"
@@ -90,16 +91,11 @@ select distinct t.test_id AS {nameof(Test.TestId)},
        0 AS {nameof(Test.CategoryId)}
 from core.test t
 inner join core.ref_test_category rtc on t.test_id = rtc.test_id
+Where is_deleted is null
 {filter}";
             
             return await _postgresService.Execute(query, async connection
                 => (await connection.QueryAsync<Test>(query)).ToArray());
-        }
-
-        /// <inheritdoc />
-        public Task<dynamic> CheckTestResultsAsync(dynamic request)
-        {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
@@ -264,12 +260,12 @@ DELETE FROM core.test_task_response_option
  WHERE test_task_id in ({string.Join(",", testTaskIds)});
 DELETE FROM core.test_task_answer
  WHERE test_task_id in ({string.Join(",", testTaskIds)});
-DELETE FROM core.test_task
- WHERE test_task_id in ({string.Join(",", testTaskIds)});
-DELETE FROM core.ref_test_category
- WHERE test_id in ({string.Join(",", testTaskIds)});
-DELETE FROM core.test
- WHERE test_id = :testId;";
+UPDATE core.test_task
+SET is_deleted = 1
+WHERE test_id = :testId;
+UPDATE core.test
+SET is_deleted = 1
+WHERE test_id = :testId;;";
             return await _postgresService.Execute(query, async connection =>
             {
                 await using var transaction = await connection.BeginTransactionAsync();
@@ -325,8 +321,9 @@ DELETE FROM core.test_task_response_option
  WHERE test_task_id in ({string.Join(",", testTaskIds)});
 DELETE FROM core.test_task_answer
  WHERE test_task_id in ({string.Join(",", testTaskIds)});
-DELETE FROM core.test_task
- WHERE test_task_id in ({string.Join(",", testTaskIds)});";
+UPDATE core.test_task
+SET is_deleted = 1
+WHERE test_id = :testId;";
             return await _postgresService.Execute(query, async connection =>
             {
                 await using var transaction = await connection.BeginTransactionAsync();
@@ -338,20 +335,51 @@ DELETE FROM core.test_task
             });
         }
 
-        private async Task<bool> RemoveTaskOptions(int taskId, string tableName)
+        /// <inheritdoc />
+        public async Task<(int taskId, string answer)[]> GetTestTaskAnswersAsync(int testId)
         {
-            Guard.GreaterThanZero(taskId, nameof(taskId));
-            Guard.NotNullOrWhiteSpace(tableName, nameof(tableName));
+            Guard.GreaterThanZero(testId, nameof(testId));
             
-            var testTaskIds = (await GetTestTaskAsync(taskId)).Select(x => x.TestTaskId).ToArray();
+            const string query = $@"
+SELECT test_task_id,
+       answer
+  FROM core.test_task_answer
+ WHERE test_task_id in (SELECT test_task_id
+                          FROM core.test_task
+                         WHERE test_id = :testId)";
 
-            var query = $@"
-DELETE FROM core.{tableName}
- WHERE test_id in ({string.Join(",", testTaskIds)})";
+            return await _postgresService.Execute(query, async connection
+                => (await connection.QueryAsync<(int taskId, string answer)>(query, new { testId})).ToArray());
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> WriteUserTestResultAsync(int userId, int testId, int taskId, string userAnswer, string correctAnswer,
+            bool answerIsCorrect)
+        {
+            Guard.GreaterThanZero(userId, nameof(userId));
+            Guard.GreaterThanZero(testId, nameof(testId));
+            Guard.GreaterThanZero(taskId, nameof(taskId));
+            Guard.NotNullOrWhiteSpace(correctAnswer, nameof(correctAnswer));
+            
+            const string query = $@"
+INSERT INTO core.test_result (test_result_id, user_id, test_id, test_task_id, user_answer, correct_answer, user_response_is_correct)
+VALUES (DEFAULT, :userId, :testId, :taskId, :userAnswer, :correctAnswer, :answerIsCorrect)";
+
             return await _postgresService.Execute(query, async connection =>
             {
                 await using var transaction = await connection.BeginTransactionAsync();
-                await connection.ExecuteAsync(query,  transaction);
+                await using var command = connection.CreateCommand();
+                command.Transaction = transaction;
+                command.CommandText = query;
+                command.CommandType = CommandType.Text;
+                
+                command.Parameters.AddWithValue("userId", userId);
+                command.Parameters.AddWithValue("testId", testId);
+                command.Parameters.AddWithValue("taskId", taskId);
+                command.Parameters.AddWithNullValue("userAnswer", userAnswer);
+                command.Parameters.AddWithValue("correctAnswer", correctAnswer);
+                command.Parameters.AddWithValue("answerIsCorrect", answerIsCorrect);
+                await command.ExecuteNonQueryAsync();
 
                 await transaction.CommitAsync();
 

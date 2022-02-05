@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Automated.Testing.System.Common.User.Dto;
 using Automated.Testing.System.Common.User.Dto.Request;
+using Automated.Testing.System.DataAccess.Abstractions.Entities;
 
 namespace Automated.Testing.System.ApplicationServices.Interfaces
 {
@@ -29,5 +30,10 @@ namespace Automated.Testing.System.ApplicationServices.Interfaces
         /// Изменить данные пользователя.
         /// </summary>
         Task<bool> UpdateUserInfoAsync(UpdaterUserRequest request);
+
+        /// <summary>
+        /// Получить информацию о текущем пользователе.
+        /// </summary>
+        Task<User> GetCurrentUserInfo();
     }
 }

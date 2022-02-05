@@ -18,11 +18,16 @@ namespace Automated.Testing.System.Common.User.Dto
         public string Login { get; set; }
         
         /// <summary>
+        /// Роли
+        /// </summary>
+        public int[] Roles { get; set; }
+        
+        /// <summary>
         /// Токен
         /// </summary>
         public string JwtToken { get; set; }
 
-        [JsonIgnore]
+
         public string RefreshToken { get; set; }
     }
 }

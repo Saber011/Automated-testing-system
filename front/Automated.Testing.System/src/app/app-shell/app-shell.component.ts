@@ -1,10 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject, takeUntil} from 'rxjs';
-import {Routes} from '@angular/router';
-import {LoginComponent} from "../modules/login/components/login.component";
-import {HomeComponent} from "../modules/home/components/home/home.component";
 import {AuthService} from "../core";
 import {UserDto} from "../api/models/user-dto";
+import {SideNavDirection} from "../component/side-nav/side-nav-direction";
 
 @Component({
   selector: 'app-app-shell',
@@ -12,13 +10,8 @@ import {UserDto} from "../api/models/user-dto";
   styleUrls: ['./app-shell.component.scss'],
 })
 export class AppShellComponent implements OnInit, OnDestroy {
-  title = '';
   userInfo :UserDto | null | undefined;
-
-  appRoutes: Routes = [
-    { path: '/login', component: LoginComponent},
-    { path: '/home', component: HomeComponent},
-  ];
+  navDirection: SideNavDirection = SideNavDirection.Left;
 
   private ngUnsubscribe$ = new Subject();
 
@@ -33,9 +26,5 @@ export class AppShellComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.ngUnsubscribe$.complete();
-  }
-
-  logout() {
-    this.authService.logout();
   }
 }

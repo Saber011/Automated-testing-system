@@ -95,14 +95,10 @@ namespace Automated.Testing.System.ApplicationServices.Services
         {
             Guard.NotNull(request, nameof(request));
             var articles =
-                (await _dictionaryRepository.GetArticlesAsync(request.Title, request.PageSize, request.PageNumber));
+                (await _dictionaryRepository.GetArticlesAsync(request.Title, request.PageSize, request.PageNumber, request.CategoryIds ));
 
-            if (request.CategoryIds is not null && request.CategoryIds.Length > 0)
-            {
-                articles = articles.Where(art => request.CategoryIds.Contains(art.CategoryId)).ToArray();
-            }
-            
-            var total = await _dictionaryRepository.GetTotalArticlesAsync();
+            var categories =
+                await _dictionaryRepository.GetArticleCategoriesAsync(articles.Select(x => x.ArticleId).ToArray());
 
             var result = new List<ArticleDto>();
             foreach (var article in articles)
@@ -113,8 +109,8 @@ namespace Automated.Testing.System.ApplicationServices.Services
                         ArticleId = article.ArticleId,
                         Text = article.Text,
                         Title = article.Title,
-                        CategoryIds = articles.Where(x => x.ArticleId == article.ArticleId).Select(x => x.CategoryId).ToArray(),
-                        Total = total,
+                        CategoryIds = categories.Where(x => x.articleId == article.ArticleId).Select(x => x.categoryId).ToArray(),
+                        Total = article.Total,
                     });
             }
 

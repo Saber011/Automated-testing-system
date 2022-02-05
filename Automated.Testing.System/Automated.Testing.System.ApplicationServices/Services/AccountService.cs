@@ -13,6 +13,7 @@ using Automated.Testing.System.Common.User.Dto.Request;
 using Automated.Testing.System.Core.Core;
 using Automated.Testing.System.DataAccess.Abstractions.Entities;
 using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
@@ -40,15 +41,17 @@ namespace Automated.Testing.System.ApplicationServices.Services
             Guard.NotNull(request, nameof(request));
             
             var user = await _userRepository.GetByLoginAsync(request.Username);
+            var roles = await _userRepository.GetUserRolesAsync(user.Id);
             var hasher = new PasswordHasher<RegisterUserRequest>();
 
-            if (user == null || hasher.VerifyHashedPassword(_mapper.Map<RegisterUserRequest>(user), user.Password, request.Password) == PasswordVerificationResult.Failed)
+            if (hasher.VerifyHashedPassword(_mapper.Map<RegisterUserRequest>(user), user.Password, request.Password) == PasswordVerificationResult.Failed)
             {
-                throw new  ValidationException( "Username or password is incorrect");
+                throw new  ValidationException( "Логин или пароль не верны");
             }
             
             var jwtToken = GenerateJwtToken(user);
             var refreshToken = GenerateRefreshToken(ipAddress);
+            refreshToken.Token = jwtToken;
             
             await _userRepository.CreateUserToken(refreshToken, user.Id);
             
@@ -57,6 +60,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
                 Login = user.Login,
                 Id = user.Id,
                 JwtToken = jwtToken,
+                Roles = roles,
                 RefreshToken = refreshToken.Token,
             };
         }
@@ -78,14 +82,15 @@ namespace Automated.Testing.System.ApplicationServices.Services
             
             if (!refreshToken.IsActive)
                 return null;
-            
+            var jwtToken = GenerateJwtToken(user);
             var newRefreshToken = GenerateRefreshToken(ipAddress);
             refreshToken.Revoked = DateTime.UtcNow;
             refreshToken.RevokedByIp = ipAddress;
             refreshToken.ReplacedByToken = newRefreshToken.Token;
+            refreshToken.Token = jwtToken;
             await _userRepository.UpdateUserToken(newRefreshToken);
             
-            var jwtToken = GenerateJwtToken(user);
+
 
             return new AuthenticateInfo
             {
@@ -110,7 +115,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
 
             if (user is not null)
             {
-                throw new ValidationException("Username or password is incorrect");
+                throw new ValidationException("Логин или пароль не верны");
             }
 
             return  await _userRepository.CreateUserAsync(request.Login, passwordHash, refreshToken);
@@ -158,8 +163,9 @@ namespace Automated.Testing.System.ApplicationServices.Services
 
         private RefreshToken GenerateRefreshToken(string ipAddress)
         {
-            using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
+            using var rngCryptoServiceProvider = RandomNumberGenerator.Create();
             var randomBytes = new byte[64];
+
             rngCryptoServiceProvider.GetBytes(randomBytes);
             return new RefreshToken
             {
