@@ -13,6 +13,11 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         /// Получить все задания теста.
         /// </summary>
         Task<TestTask[]> GetTestTaskAsync(int testId);
+        
+        /// <summary>
+        /// Получить количество попыток выполнить тест.
+        /// </summary>
+        Task<int> GetUserTryExecuteTestAsync(int testId, int userId);
 
         /// <summary>
         ///  Получить варианты ответа для задачи.
@@ -72,7 +77,6 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         /// <summary>
         /// Записать результаты прохождения теста
         /// </summary>
-        /// <returns></returns>
-        Task<bool> WriteUserTestResultAsync(int userId, int testId, int taskId, string userAnswer, string correctAnswer, bool answerIsCorrect);
+        Task<bool> WriteUserTestResultAsync(int userId, int testId, int taskId, string userAnswer, string correctAnswer, bool answerIsCorrect, int countTry);
     }
 }

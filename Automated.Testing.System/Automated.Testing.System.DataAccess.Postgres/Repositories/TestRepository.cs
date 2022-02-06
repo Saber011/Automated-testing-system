@@ -47,6 +47,23 @@ where test_id = :testId";
         }
         
         /// <inheritdoc />
+        public async Task<int> GetUserTryExecuteTestAsync(int testId, int userId)
+        {
+            Guard.GreaterThanZero(testId, nameof(testId));
+            Guard.GreaterThanZero(userId, nameof(userId));
+            
+            const string query = $@"
+SELECT count(1)
+  FROM core.test_result
+ WHERE user_id = :userId
+   AND test_id = :testId
+GRouP BY test_id, test_task_id";
+
+            return await _postgresService.Execute(query, async connection
+                => (await connection.QueryFirstOrDefaultAsync<int>(query, new { testId, userId})));
+        }
+
+        /// <inheritdoc />
         public async Task<(int, int, string)[]> GetTestTaskResponseOptionAsync(int[] taskIds)
         {
             Guard.NotNullOrEmpty(taskIds, nameof(taskIds));
@@ -354,16 +371,17 @@ SELECT test_task_id,
 
         /// <inheritdoc />
         public async Task<bool> WriteUserTestResultAsync(int userId, int testId, int taskId, string userAnswer, string correctAnswer,
-            bool answerIsCorrect)
+            bool answerIsCorrect, int countTry)
         {
             Guard.GreaterThanZero(userId, nameof(userId));
             Guard.GreaterThanZero(testId, nameof(testId));
             Guard.GreaterThanZero(taskId, nameof(taskId));
+            Guard.GreaterThanZero(countTry, nameof(countTry));
             Guard.NotNullOrWhiteSpace(correctAnswer, nameof(correctAnswer));
             
             const string query = $@"
-INSERT INTO core.test_result (test_result_id, user_id, test_id, test_task_id, user_answer, correct_answer, user_response_is_correct)
-VALUES (DEFAULT, :userId, :testId, :taskId, :userAnswer, :correctAnswer, :answerIsCorrect)";
+INSERT INTO core.test_result (test_result_id, user_id, test_id, test_task_id, user_answer, correct_answer, user_response_is_correct, try_execute)
+VALUES (DEFAULT, :userId, :testId, :taskId, :userAnswer, :correctAnswer, :answerIsCorrect, :countTry)";
 
             return await _postgresService.Execute(query, async connection =>
             {
@@ -379,6 +397,7 @@ VALUES (DEFAULT, :userId, :testId, :taskId, :userAnswer, :correctAnswer, :answer
                 command.Parameters.AddWithNullValue("userAnswer", userAnswer);
                 command.Parameters.AddWithValue("correctAnswer", correctAnswer);
                 command.Parameters.AddWithValue("answerIsCorrect", answerIsCorrect);
+                command.Parameters.AddWithValue("countTry", countTry);
                 await command.ExecuteNonQueryAsync();
 
                 await transaction.CommitAsync();

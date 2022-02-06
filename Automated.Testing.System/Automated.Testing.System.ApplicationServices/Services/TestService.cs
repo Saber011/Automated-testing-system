@@ -62,6 +62,8 @@ namespace Automated.Testing.System.ApplicationServices.Services
         {
             var userInfo = await _userService.GetCurrentUserInfo();
             var testAnswers = await _testRepository.GetTestTaskAnswersAsync(request.TestId);
+            var userCountTry = await _testRepository.GetUserTryExecuteTestAsync(request.TestId, userInfo.Id);
+            userCountTry++;
             var countCorrect = 0;
             var allTaskInTest = testAnswers.Select(x => x.taskId).Distinct().Count();
             foreach (var taskId in testAnswers.Select(x => x.taskId).Distinct())
@@ -71,7 +73,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
                 var correctAnswer = string.Join(",", correctAnswers);
                 var isCorrect = correctAnswers.Any(x => userAnswers != null && userAnswers.Contains(x));
                 countCorrect += isCorrect ? 1 : 0;
-                await _testRepository.WriteUserTestResultAsync(userInfo.Id, request.TestId, taskId, userAnswers, correctAnswer, isCorrect);
+                await _testRepository.WriteUserTestResultAsync(userInfo.Id, request.TestId, taskId, userAnswers, correctAnswer, isCorrect, userCountTry);
             }
 
             return new TestPassedResultDto
