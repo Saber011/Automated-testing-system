@@ -20,10 +20,11 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { ResultTestDialogComponent } from './components/dialog/result-test-dialog/result-test-dialog.component';
 import { DeleteTestDialogComponent } from './components/dialog/delete-test-dialog/delete-test-dialog.component';
+import { CheckboxValueDirective } from './components/checkbox-value.directive';
 
 
 @NgModule({
-  declarations: [LearningTestComponent, ExecuteTestComponent, TestListComponent, CreateTestComponent, AddTestDialogComponent, ResultTestDialogComponent, DeleteTestDialogComponent],
+  declarations: [LearningTestComponent, ExecuteTestComponent, TestListComponent, CreateTestComponent, AddTestDialogComponent, ResultTestDialogComponent, DeleteTestDialogComponent, CheckboxValueDirective],
   imports: [
     CommonModule,
     TestRoutingModule,

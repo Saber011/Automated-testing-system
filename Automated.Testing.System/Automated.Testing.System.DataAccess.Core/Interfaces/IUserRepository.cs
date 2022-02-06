@@ -33,7 +33,7 @@ namespace Automated.Testing.System.DataAccess.Abstractions.Interfaces
         /// <summary>
         /// Получить пользователя по токену.
         /// </summary>
-        Task<User> GetUserByToken(string token);
+        Task<User?> GetUserByToken(string token);
         
         /// <summary>
         /// Создать пользователя

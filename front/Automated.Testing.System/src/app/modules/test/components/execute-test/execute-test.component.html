@@ -30,7 +30,7 @@
   <input matInput [formControl]="formControl" placeholder="Введите ответ">
 </ng-template>
 <ng-template [ngSwitchCase]= "'3'">
-  <mat-checkbox [formControl]="formControl" class="example-margin" >Checked</mat-checkbox>
+  <mat-checkbox appCheckboxValue trueValue="true" falseValue="false" [formControl]="formControl" class="example-margin" >Да</mat-checkbox>
 </ng-template>
 <ng-template ngSwitchDefault>Тип не распознан </ng-template>
   </div>

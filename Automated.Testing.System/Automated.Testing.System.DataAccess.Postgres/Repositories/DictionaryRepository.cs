@@ -9,7 +9,6 @@ using Automated.Testing.System.DataAccess.Abstractions.Entities;
 using Automated.Testing.System.DataAccess.Abstractions.Interfaces;
 using Automated.Testing.System.DatabaseProvider.Postgres;
 using Dapper;
-using Microsoft.VisualBasic;
 
 namespace Automated.Testing.System.DataAccess.Postgres.Repositories
 {
