@@ -16,7 +16,6 @@ namespace Automated.Testing.System.ApplicationServices.Services
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private const string Bearer = "Bearer ";
 
         public UserService(
             IUserRepository userRepository,
@@ -31,10 +30,10 @@ namespace Automated.Testing.System.ApplicationServices.Services
         /// <inheritdoc />
         public async Task<User> GetCurrentUserInfo()
         {
-            var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"];
+            var token = _httpContextAccessor.HttpContext?.Request.Cookies["refreshToken"];
             if (token is not null)
             {
-                return await _userRepository.GetUserByToken(token.Value.ToString().Replace(Bearer, string.Empty));
+                return await _userRepository.GetUserByToken(token);
             }
             
             return null;

@@ -82,7 +82,7 @@ SELECT role_id
         }
 
         /// <inheritdoc />
-        public async Task<User> GetUserByToken(string token)
+        public async Task<User?> GetUserByToken(string token)
         {
             const string query = $@"
 SELECT user_id AS {nameof(User.Id)},

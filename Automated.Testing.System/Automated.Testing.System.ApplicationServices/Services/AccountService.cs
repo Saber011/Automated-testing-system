@@ -51,7 +51,7 @@ namespace Automated.Testing.System.ApplicationServices.Services
             
             var jwtToken = GenerateJwtToken(user);
             var refreshToken = GenerateRefreshToken(ipAddress);
-            refreshToken.Token = jwtToken;
+            refreshToken.Token = refreshToken.Token;
             
             await _userRepository.CreateUserToken(refreshToken, user.Id);
             
@@ -70,14 +70,12 @@ namespace Automated.Testing.System.ApplicationServices.Services
         {
             Guard.NotNullOrWhiteSpace(token, nameof(token));
             
-            var usersId = await _userRepository.GetUseridByTokens(token);
+            var user = await _userRepository.GetUserByToken(token);
             
-            if (usersId == null)
+            if (user is null)
                 return null;
-            var user = await _userRepository.GetByIdAsync(usersId!.Value);
-            var userToken = await _userRepository.GetUserTokens(usersId!.Value);
+            var userToken = await _userRepository.GetUserTokens(user.Id);
             
-
             var refreshToken = userToken.Single(x => x.Token == token);
             
             if (!refreshToken.IsActive)
@@ -90,8 +88,6 @@ namespace Automated.Testing.System.ApplicationServices.Services
             refreshToken.Token = jwtToken;
             await _userRepository.UpdateUserToken(newRefreshToken);
             
-
-
             return new AuthenticateInfo
             {
                 Login = user.Login,
