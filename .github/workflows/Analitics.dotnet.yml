@@ -1,0 +1,40 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Automated.Testing.System/Automated.Testing.System.Analytics.Web/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    # Build
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet publish -r linux-x64 -o cur
+    # Test
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    # Deploy
+    - run: rsync --rsh="sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no -l ${{secrets.USERNAME}}" --archive --compress --delete /home/runner/work/Automated-testing-system/Automated-testing-system/Automated.Testing.System/Automated.Testing.System.Analytics.Web/cur/ ${{secrets.HOST}}:/srv/analitics/
+    - name: restart service
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: systemctl restart analitics
