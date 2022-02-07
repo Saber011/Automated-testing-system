@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+        <PackageReference Include="MediatR" Version="10.0.1" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.DataAccess.Postgres\Automated.Testing.System.Analytics.DataAccess.Postgres.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.Infrastructure.Implementation\Automated.Testing.System.Analytics.Infrastructure.Implementation.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.Infrastructure.Interfaces\Automated.Testing.System.Analytics.Infrastructure.Interfaces.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.UseCases\Automated.Testing.System.Analytics.UseCases.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Utils\Automated.Testing.System.Utils.csproj" />
+    </ItemGroup>
+
+</Project>

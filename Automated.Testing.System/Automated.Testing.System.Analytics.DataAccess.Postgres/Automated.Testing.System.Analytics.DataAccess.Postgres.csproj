@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.Entities\Automated.Testing.System.Analytics.Entities.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.Infrastructure.Interfaces\Automated.Testing.System.Analytics.Infrastructure.Interfaces.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Core\Automated.Testing.System.Core.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.DatabaseProvider.Postgres\Automated.Testing.System.DatabaseProvider.Postgres.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Utils\Automated.Testing.System.Utils.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.0.78" />
+    </ItemGroup>
+
+</Project>
