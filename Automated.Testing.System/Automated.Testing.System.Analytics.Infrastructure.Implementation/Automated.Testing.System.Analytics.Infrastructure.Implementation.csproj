@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.Entities\Automated.Testing.System.Analytics.Entities.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.Infrastructure.Interfaces\Automated.Testing.System.Analytics.Infrastructure.Interfaces.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Utils\Automated.Testing.System.Utils.csproj" />
+    </ItemGroup>
+
+</Project>

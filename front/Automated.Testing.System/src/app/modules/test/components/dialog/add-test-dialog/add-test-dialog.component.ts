@@ -110,7 +110,7 @@ export class AddTestDialogComponent implements OnInit {
       }})
       .subscribe(response =>
       {
-        console.log(response);
+        this.dialogRef.close();
       })
   }
 }

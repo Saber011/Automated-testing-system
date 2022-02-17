@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.Entities\Automated.Testing.System.Analytics.Entities.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Analytics.Infrastructure.Interfaces\Automated.Testing.System.Analytics.Infrastructure.Interfaces.csproj" />
+      <ProjectReference Include="..\Automated.Testing.System.Utils\Automated.Testing.System.Utils.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="11.0.0" />
+      <PackageReference Include="MediatR" Version="10.0.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Handlers\Statistic\Commands" />
+    </ItemGroup>
+
+</Project>
