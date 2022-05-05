@@ -5,13 +5,9 @@
 
 //public class Tests
 //{
-//    private readonly IAccountService _accountService;
-//    private readonly IUserService _userService;
 
-//    public Tests(IAccountService accountService, IUserService userService)
+//    public Tests()
 //    {
-//        _accountService = accountService;
-//        _userService = userService;
 //    }
 
 //    [SetUp]
@@ -23,11 +19,5 @@
 //    [Test]
 //    public async Task Test1()
 //    {
-//        var result = await _accountService.RegisterUserAsync(new RegisterUserRequest()
-//        {
-//            Login = "test",
-//            Password = "test",
-//        }, null);
-//        Assert.True(result);
 //    }
 //}
