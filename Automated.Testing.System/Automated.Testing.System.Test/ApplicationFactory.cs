@@ -19,9 +19,9 @@ namespace Automated.Testing.System.Test
                 .UseStartup<Startup>()
                 .ConfigureServices(services =>
                 {
-                    var test  = services.Where(x => x.ServiceType.FullName.Contains("Microsoft.AspNetCore.Authentication.AuthenticationOptions")).ToArray();
-                    services.Remove(test[2]);
-                    services.Remove(test[3]);
+                    var authServices  = services.Where(x => x.ServiceType.FullName.Contains("Microsoft.AspNetCore.Authentication.AuthenticationOptions")).ToArray();
+                    services.Remove(authServices[2]);
+                    services.Remove(authServices[3]);
                 });
         }
 
