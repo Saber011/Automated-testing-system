@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Automated.Testing.System.Core.Core;
 using Automated.Testing.System.Core.Execute.models;

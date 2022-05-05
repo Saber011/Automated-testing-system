@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using Automated.Testing.System.Core.Core;
 using Automated.Testing.System.Test.Interfaces;
 using Automated.Testing.System.Web;
@@ -15,7 +16,13 @@ namespace Automated.Testing.System.Test
         {
             builder
                 .UseEnvironment("Test")
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .ConfigureServices(services =>
+                {
+                    var test  = services.Where(x => x.ServiceType.FullName.Contains("Microsoft.AspNetCore.Authentication.AuthenticationOptions")).ToArray();
+                    services.Remove(test[2]);
+                    services.Remove(test[3]);
+                });
         }
 
         /// <inheritdoc />

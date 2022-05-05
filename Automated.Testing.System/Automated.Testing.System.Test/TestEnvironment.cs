@@ -27,23 +27,12 @@ namespace Automated.Testing.System.Test
         }
 
         /// <inheritdoc />
-        public HttpClient CreateClient(Action<HttpClientOptions>? setupAction = null)
+        public HttpClient CreateClient()
         {
-            var options = new HttpClientOptions();
-
-            setupAction?.Invoke(options);
-
             var httpClient = _applicationFactory.CreateClient();
 
             httpClient.BaseAddress = new Uri(httpClient.BaseAddress, _controller);
-
-            if (!string.IsNullOrWhiteSpace(options.AuthorizationToken))
-            {
-                httpClient.DefaultRequestHeaders.Add(
-                    HttpRequestHeader.Authorization.ToString(),
-                    options.AuthorizationToken);
-            }
-
+            
             return httpClient;
         }
     }

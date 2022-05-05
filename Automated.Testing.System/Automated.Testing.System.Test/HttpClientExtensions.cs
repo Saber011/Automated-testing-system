@@ -1,8 +1,15 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Net.Mime;
+using System.Text;
 using System.Threading.Tasks;
+using Automated.Testing.System.Common.User.Dto;
+using Automated.Testing.System.Common.User.Dto.Request;
 using Automated.Testing.System.Core.Core;
+using Automated.Testing.System.Core.Execute.models;
+using Newtonsoft.Json;
 
 namespace Automated.Testing.System.Test
 {
@@ -12,7 +19,7 @@ namespace Automated.Testing.System.Test
     public static class HttpClientExtensions
     {
         /// <summary>
-        /// Перегрузка метода <see cref="System.Net.Http.HttpClientExtensions.PostAsJsonAsync{T}(System.Net.Http.HttpClient,string,T)"/>.
+        /// Перегрузка метода <see cref="WebRequestMethods.Http.HttpClientExtensions.PostAsJsonAsync{T}(System.HttpClient,T)"/>.
         /// Аналогичен вызову,
         /// <code>
         /// client.PostAsJsonAsync(requestUri, (object?)null);
@@ -40,6 +47,25 @@ namespace Automated.Testing.System.Test
 
             var content = new FormUrlEncodedContent(request.ToKeyValues());
             return await client.PostAsync(requestUri, content);
+        }
+        
+        public static HttpClient SetToken(this HttpClient client)
+        {
+            var credentials = new AuthenticateRequest
+            {
+                Username = "string@mail.ru",
+                Password = "string"
+            };
+            var test = new StringContent(JsonConvert.SerializeObject(credentials),
+                Encoding.UTF8, 
+                "application/json");
+            var response = client.PostAsync("/api/Account/Authenticate", test).Result;
+            var loginResponseContent = response.Content.ReadAsStringAsync().Result;
+            var loginResult = JsonConvert.DeserializeObject<ServiceResponse<AuthenticateInfo>>(loginResponseContent);
+            client.DefaultRequestHeaders.Add(
+                    HttpRequestHeader.Authorization.ToString(), 
+                $"Bearer {loginResult.Content.JwtToken}");
+            return client;
         }
     }
 }

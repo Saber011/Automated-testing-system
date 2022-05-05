@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 
 namespace Automated.Testing.System.Test.Interfaces
 {
@@ -11,6 +10,6 @@ namespace Automated.Testing.System.Test.Interfaces
         /// <summary>
         /// Создаёт `HTTP`-клиент.
         /// </summary>
-        HttpClient CreateClient(Action<HttpClientOptions>? setupAction = null);
+        HttpClient CreateClient();
     }
 }
