@@ -31,16 +31,14 @@ namespace Automated.Testing.System.Web
         {
             services.AddControllers();
             services.Configure<PostgresConfig>(Configuration.GetSection("Postgres"));
+            var isTestEnv = !string.IsNullOrEmpty(Configuration["TestEnvironment"]);
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AuthenticationSettingsConfig>(appSettingsSection);
-            services.AddSwagger();
+            services.AddSwagger(isTestEnv);
             var appSettings = appSettingsSection.Get<AuthenticationSettingsConfig>();
+
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(x =>
                 {
                     x.RequireHttpsMetadata = false;

@@ -213,7 +213,7 @@
             <response code = "401" > Данный запрос требует аутентификации.</response>
             <response code = "500" > Непредвиденная ошибка сервера.</response>
         </member>
-        <member name="M:Automated.Testing.System.Web.SwaggerConfig.SwaggerConfig.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Automated.Testing.System.Web.SwaggerConfig.SwaggerConfig.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Boolean)">
             <summary>
             Включает мидлварь Swagger-a.
             </summary>

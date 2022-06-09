@@ -27,7 +27,8 @@ jobs:
       run: dotnet publish -r linux-x64 -o cur
     # Test
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      working-directory: ./Automated.Testing.System/Automated.Testing.System.Test/
+      run: dotnet test
     # Deploy
     - run: rsync --rsh="sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no -l ${{secrets.USERNAME}}" --archive --compress --delete /home/runner/work/Automated-testing-system/Automated-testing-system/Automated.Testing.System/Automated.Testing.System.Web/cur/ ${{secrets.HOST}}:/srv/app/
     - name: restart service

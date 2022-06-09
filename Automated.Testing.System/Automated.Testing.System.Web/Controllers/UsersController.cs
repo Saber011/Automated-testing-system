@@ -1,14 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Automated.Testing.System.ApplicationServices.Interfaces;
 using Automated.Testing.System.Common.User.Dto;
 using Automated.Testing.System.Common.User.Dto.Request;
-using Automated.Testing.System.Core.Core;
 using Automated.Testing.System.Core.Execute;
 using Automated.Testing.System.Core.Execute.models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Automated.Testing.System.Web.Controllers
@@ -48,9 +44,9 @@ namespace Automated.Testing.System.Web.Controllers
         /// <response code = "401" > Данный запрос требует аутентификации.</response>
         /// <response code = "500" > Непредвиденная ошибка сервера.</response>
         [HttpGet]
-        public async Task<UserDto> GetUserById(int id)
+        public async Task<ServiceResponse<UserDto>> GetUserById(int id)
         {
-            return await _userService.GetUserByIdAsync(id);
+            return ServiceResponseHelper.ConvertToServiceResponse(await _userService.GetUserByIdAsync(id));
         }
         
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Automated.Testing.System.Core.Core;
 using Microsoft.Extensions.Options;
@@ -35,7 +36,8 @@ namespace Automated.Testing.System.DatabaseProvider.Postgres
             }
 
         /// <inheritdoc />
-        public async Task<T> ExecuteCommand<T>(NpgsqlCommand command, Func<NpgsqlCommand, Task<T>> executeCommand)
+        public async Task<T> ExecuteCommand<T>(NpgsqlCommand command,
+            Func<NpgsqlCommand, Task<T>> executeCommand)
         {
             Guard.NotNull(command, nameof(command));
             Guard.NotNullOrWhiteSpace(command.CommandText, nameof(command.CommandText));
