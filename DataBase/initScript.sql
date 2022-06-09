@@ -1,3 +1,7 @@
+CREATE DATABASE test
+    with owner postgres
+    TEMPLATE template0;
+
 create schema core;
 
 create table if not exists core.article
@@ -213,16 +217,12 @@ create table if not exists core.dictionary
 
 alter table core.dictionary owner to postgres;
 
-create unique index if not exists core.dictionary_dictionary_name_uindex
+create unique index if not exists dictionary_dictionary_name_uindex
 	on core.dictionary (dictionary_name);
+
 
 
 
 INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'Категории', 'category');
 INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'Роли', 'role');
 INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'Статьи', 'article');
-
-
-
-
-
