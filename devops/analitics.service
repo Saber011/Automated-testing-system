@@ -1,0 +1,22 @@
+[Unit]
+Description=test_analitics
+After=syslog.target network.target
+
+[Service]
+Type=simple
+
+
+WorkingDirectory=/srv/analitics
+
+ExecStart=
+ExecStart=/usr/bin/dotnet Automated.Testing.System.Analytics.Web.dll
+
+Restart=on-failure
+RestartSec=10
+
+SyslogIdentifier=urp
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
