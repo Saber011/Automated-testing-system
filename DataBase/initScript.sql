@@ -1,7 +1,5 @@
 CREATE DATABASE test
-    with owner postgres
     TEMPLATE template0;
-
 create schema core;
 
 create table if not exists core.article
@@ -221,8 +219,17 @@ create unique index if not exists dictionary_dictionary_name_uindex
 	on core.dictionary (dictionary_name);
 
 
-
-
 INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'Категории', 'category');
 INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'Роли', 'role');
 INSERT INTO core.dictionary (dictionary_id, dictionary_name, table_name) VALUES (DEFAULT, 'Статьи', 'article');
+
+
+CREATE  OR REPLACE FUNCTION add_to_role() RETURNS TRIGGER AS $$
+BEGIN
+        INSERT INTO core.user_roles values (NEW.user_id , 1);
+        RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER t_user_role
+AFTER INSERT ON core.user FOR EACH ROW EXECUTE PROCEDURE add_to_role ();
